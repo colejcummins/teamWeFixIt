@@ -1,0 +1,11 @@
+{
+    "python.pythonPath": "/home/jakbquick/.pyenv/versions/3.9.0/bin",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django"
+    ],
+    "[python]": {
+
+    },
+}
