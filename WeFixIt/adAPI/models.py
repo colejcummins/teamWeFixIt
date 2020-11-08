@@ -22,9 +22,13 @@ class Advertisement(models.Model):
     """
     Represents an advertisement created by an administrator.
 
+        header_text             - 400 char field
+        image                   - image (stored in MEDIA_ROOT)
+        second_text             - 400 char field
+        button_rendered_link    - 400 char field
     """
     # campaign
     header_text = models.CharField(max_length=400)
-    image_url = models.CharField(max_length=400)
+    image = models.ImageField(upload_to='')
     second_text = models.CharField(max_length=400)
     button_rendered_link = models.CharField(max_length=400)

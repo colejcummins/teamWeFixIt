@@ -3,9 +3,9 @@ from django.shortcuts import render
 # Create your views here.
 
 from rest_framework import viewsets
-
-from .serializers import CampaignSerializer
-from .models import Campaign
+from django.http import FileResponse, HttpResponseBadRequest
+from .serializers import CampaignSerializer, AdvertisementSerializer
+from .models import Campaign, Advertisement
 
 
 class CampaignViewSet(viewsets.ModelViewSet):
@@ -16,3 +16,13 @@ class CampaignViewSet(viewsets.ModelViewSet):
     """
     queryset = Campaign.objects.all().order_by('name')
     serializer_class = CampaignSerializer
+
+
+class AdvertisementViewSet(viewsets.ModelViewSet):
+    """
+    Class that represents the page returned when /ads/ is accessed
+
+    Orders all advertisements in the database by id.
+    """
+    queryset = Advertisement.objects.all().order_by('id')
+    serializer_class = AdvertisementSerializer

@@ -1,7 +1,7 @@
 # serializers.py
 
 from rest_framework import serializers
-from .models import Campaign
+from .models import Campaign, Advertisement
 
 
 class CampaignSerializer(serializers.HyperlinkedModelSerializer):
@@ -20,3 +20,14 @@ class CampaignSerializer(serializers.HyperlinkedModelSerializer):
         if Campaign.objects.filter(name=data['name']).count() != 0:
             raise serializers.ValidationError("Campaigns must have unique names,", data['name'], "already exists.")
         return data
+
+
+class AdvertisementSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Handles the API requests to create/delete/update Advertisements automatically
+    using the fields of the Advertisement.
+    """
+    class Meta:
+        model = Advertisement
+        fields = ('id', 'header_text', 'image', 'second_text',
+                  'button_rendered_link')

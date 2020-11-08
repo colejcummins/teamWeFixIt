@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +27,13 @@ SECRET_KEY = '%^@pmx(qu6aecdooebqxys9)v=kj5#7f9%er2wi^fvsf4uj%cf'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+# Where images are stored on the server
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# prefix to the image urls
+MEDIA_URL = '/media/'
+
 
 # Must be admin by default unless explicitly specified in the view.
 # permission_classes = [IsAuthenticated]
