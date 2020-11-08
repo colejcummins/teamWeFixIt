@@ -17,3 +17,4 @@ class CampaignSerializer(serializers.HyperlinkedModelSerializer):
         """
         if data['start_date'] > data['end_date']:
             raise serializers.ValidationError("End date comes before start date in campaign.")
+        return data
