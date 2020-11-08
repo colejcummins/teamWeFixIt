@@ -16,3 +16,15 @@ class Campaign(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Advertisement(models.Model):
+    """
+    Represents an advertisement created by an administrator.
+
+    """
+    # campaign
+    header_text = models.CharField(max_length=400)
+    image_url = models.CharField(max_length=400)
+    second_text = models.CharField(max_length=400)
+    button_rendered_link = models.CharField(max_length=400)

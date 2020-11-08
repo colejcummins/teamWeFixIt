@@ -11,10 +11,12 @@ class CampaignSerializer(serializers.HyperlinkedModelSerializer):
 
     def validate(self, data):
         """
-        Checks that end_date is not earlier than start_date.
+        Checks that end_date is not earlier than start_date and that campaign name is unique.
 
-        Throws a serailizers.ValidationError if data is incorrectly entered.
+        Throws a serializers. ValidationError if data is incorrectly entered.
         """
         if data['start_date'] > data['end_date']:
             raise serializers.ValidationError("End date comes before start date in campaign.")
+        if Campaign.objects.filter(name=data['name']).count() != 0:
+            raise serializers.ValidationError("Campaigns must have unique names,", data['name'], "already exists.")
         return data
