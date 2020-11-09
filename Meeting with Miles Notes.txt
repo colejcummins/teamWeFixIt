@@ -1,0 +1,108 @@
+General Idea: 
+    Our MVP will be a smarter way to serve local iFixit ads.
+
+Front End:
+    Want to be able to display ads in their different formats (full screen and banner)
+        and show all information that comes with served ad (Back ground image, header text, second text screen, button rendered link.)
+
+Back end: 
+    Decision Ideas:
+        GeoLocation, platform, location on site, random selection, frequency of days
+    Want to be able to schedule ads and rotate through a group (the whole point of switching)
+    Cross platform, purchase, and geolocation 
+    Possible integration into iFixit data in the future
+
+Reported Analytics:
+    How often it ran. How many times an ad converted to sales, 
+    what ads we have shown to which user, the time of the ad
+    Log record of display history as csv
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Q: What are the expectations and why are you switching?
+
+Would like to run parallel campaigns, that are intelligent, geo, 
+past purchasing history, all advertising is for everyone, with low revenue. 
+Specifically, if we can tell the device that a user is on, 
+we want to be marketing an upsell for that specifically.
+
+Q: What are the most important campaign questions
+A: The most important is geolocation, we have lots of stores nationwide, languages, 
+and we want to be able to integrate with our sales pipeline. 
+If we can target an upsell to a device that would be ideal. 
+Can also set workbench to what devices you have.
+Platform based, IOS, Android, PC, iphone vs tablet
+
+Q: How big are these adds?
+A: One is a full screen width, the other is a smaller injectable unit
+
+How are we going to integrate?
+A: there should be small batches, multiple campaigns, rotation of ads, and API handling.
+Don't worry too much about integration.
+
+Q: What sort of analytics do we need?
+Managment
+A: Scheduling, when to start when to stop, configuring thenumber of times that an ad is shown
+If we have two campaigns with 3 ads each, we want to be able to rotate these ads, 
+the benefit of showing ads more than one time
+Cross advertisement management: IOS, purchase, and Geo campaign, 
+which one do you use. Need to have a rule set to figure out which one of these campaigns you use.
+Link text, link target, color scheme, start and end dates of campaign, 
+criteria for how campaign gets applied, location of the campaign 
+— seems like these are all things that we need to keep track off
+
+Reporting:
+How often it ran. How many times an ad converted to sales, 
+what ads we have shown to which user, the time of the ad
+
+order of delivery:
+more than 1 campaign
+decision matrix for showing the right campaign
+analytical data for how important campaign was
+
+Q: What are the most important things that you need
+A: Need to be able to show more than one campaign,
+ a decision matrix on when to show what campaigns, and then analytical data of
+  how effective that campaign was
+
+
+Very close second are the business rules that surround those campaigns
+
+Michael Moschitto  26 days ago
+Comparative data analytics between users A/B, MVP could get away with major 
+or minor campaign but both would be preferred.
+
+Q: What are the most important features of the front end?
+A: Not really sure…
+Right now we just have a guide id and that returns a banner or ad
+
+Are we just replacing that?
+A: We are completely replacing that because there are no business rules right now, 
+and only one campaign, ideally we would ask for an ad, and then calculate the 
+best ad to show on the backend
+
+Q: What is the advertising content? Do you want html description (info, color, header,  etc) 
+or do you just want a picture? What is the actual ad content
+A: Back ground image, header text, second text screen, button rendered link. 
+The image will just be an image, there will be no need to change out the image.
+
+Do you need multiple criteria for an MVP (as far as reporting goes)?
+You will have click through, log record of display history. Say we were going to do 10,000,
+ I would want to see clickthrough. Need a csv export of data.
+
+ Q Is it ok do just do Monte Carlo selection
+I would like there to be a selection that is selected by manager, randomization is ok for 
+example choosing an ad from within campaign randomly is ok. Should be a little bit smarter than 
+that, won’t select the same thing two times in a row. 
+Say 30 of the last 50 were one of the three, we would want to balance it out.
+
+The client side will send relevant information, a user reference.
+User reference can’t be ip, email. It will be an alphanumeric of some sort.
+Will our server need to access Ifixit data?
+No that is not configured right now, but down the road this is a potential
+
+
+
+
