@@ -7,7 +7,7 @@ from .models import Campaign, Advertisement
 class CampaignSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Campaign
-        fields = ('id', 'name', 'start_date', 'end_date')
+        fields = ('id', 'name', 'start_date', 'end_date', 'advertisements')
 
     def validate(self, data):
         """
