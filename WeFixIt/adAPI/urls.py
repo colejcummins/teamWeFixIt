@@ -8,6 +8,11 @@ from django.conf.urls.static import static
 router = routers.DefaultRouter()
 router.register(r'campaigns', views.CampaignViewSet)
 router.register(r'advertisements', views.AdvertisementViewSet)
+# currently resulting in errors:
+#router.register(r'campaigns', views.CampaignList)
+#router.register(r'campaigns', views.CampaignDetail)
+#router.register(r'advertisements', views.AdvertisementList)
+#router.register(r'advertisements', views.AdvertisementDetail)
 
 # Wire up API using automatic URL routing
 # include login URLs

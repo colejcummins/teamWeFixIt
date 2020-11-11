@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
@@ -32,12 +32,46 @@ class AdvertisementViewSet(viewsets.ModelViewSet):
     serializer_class = AdvertisementSerializer
 
 
+class CampaignList(generics.ListCreateAPIView):
+    """
+    Class that contains all the campaigns in our database
+    """
+    queryset = Campaign.objects.all().order_by('name')
+    serializer_class = CampaignSerializer
+
+
+class CampaignDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Class that allows you to create, update, or destroy campaigns in the database
+    """
+    queryset = Campaign.objects.all().order_by('name')
+    serializer_class = CampaignSerializer
+
+
+class AdvertisementList(generics.ListCreateAPIView):
+    """
+    Class that contains all the advertisements in our database
+    """
+    queryset = Advertisement.objects.all().order_by('id')
+    serializer_class = AdvertisementSerializer
+
+
+class AdvertisementDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Class that allows you to create, update, or destroy advertisements in the database
+    """
+    queryset = Advertisement.objects.all().order_by('id')
+    serializer_class = AdvertisementSerializer
+
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def getad(request):
     """
     Function that randomly returns a single ad in the database.
     """
+    # how to get params for query:
+    # print(request.query_params)
     ads = Advertisement.objects.all().order_by('?').first()
     serializer = AdvertisementSerializer(ads, many=False)
     return Response(serializer.data)
