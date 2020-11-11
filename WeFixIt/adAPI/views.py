@@ -3,7 +3,6 @@ from django.shortcuts import render
 # Create your views here.
 
 from rest_framework import viewsets
-from django.http import FileResponse, HttpResponseBadRequest
 from .serializers import CampaignSerializer, AdvertisementSerializer
 from .models import Campaign, Advertisement
 
@@ -20,7 +19,7 @@ class CampaignViewSet(viewsets.ModelViewSet):
 
 class AdvertisementViewSet(viewsets.ModelViewSet):
     """
-    Class that represents the page returned when /ads/ is accessed
+    Class that represents the page returned when /advertisements/ is accessed
 
     Orders all advertisements in the database by id.
     """
