@@ -32,23 +32,8 @@ class AdvertisementViewSet(viewsets.ModelViewSet):
     serializer_class = AdvertisementSerializer
 
 
-class CampaignList(generics.ListCreateAPIView):
-    """
-    Class that contains all the campaigns in our database
-    """
-    queryset = Campaign.objects.all().order_by('name')
-    serializer_class = CampaignSerializer
-
-
-class CampaignDetail(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Class that allows you to create, update, or destroy campaigns in the database
-    """
-    queryset = Campaign.objects.all().order_by('name')
-    serializer_class = CampaignSerializer
-
-
 class AdvertisementList(generics.ListCreateAPIView):
+    permission_classes = (IsAdminUser,)
     """
     Class that contains all the advertisements in our database
     """
@@ -57,11 +42,30 @@ class AdvertisementList(generics.ListCreateAPIView):
 
 
 class AdvertisementDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAdminUser,)
     """
     Class that allows you to create, update, or destroy advertisements in the database
     """
     queryset = Advertisement.objects.all().order_by('id')
     serializer_class = AdvertisementSerializer
+
+
+class CampaignList(generics.ListCreateAPIView):
+    permission_classes = (IsAdminUser,)
+    """
+    Class that contains all the campaigns in our database
+    """
+    queryset = Campaign.objects.all().order_by('name')
+    serializer_class = CampaignSerializer
+
+
+class CampaignDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAdminUser,)
+    """
+    Class that allows you to create, update, or destroy campaigns in the database
+    """
+    queryset = Campaign.objects.all().order_by('name')
+    serializer_class = CampaignSerializer
 
 
 @api_view(['GET'])
