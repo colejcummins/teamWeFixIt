@@ -10,16 +10,26 @@ const TopContainer = styled.div`
   flex-direction: column;
 `;
 
+const ScrollContainer = styled.div`
+  max-height: calc(100vh - 44px);
+
+  overflow: scroll;
+`;
+
 const GridContainer = styled.div`
+  background-color: #2B3032;
+
   margin-top: 10px;
   margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 
   display: grid;
 
-  grid-template-columns: 350px 350px 350px;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 30px;
   grid-template-rows: auto;
-  row-gap: 40px
-
+  row-gap: 40px;
 `;
 
 export default function CardGrid({ categories, titles }) {
@@ -36,9 +46,11 @@ export default function CardGrid({ categories, titles }) {
   return (
     <TopContainer>
       <PathNavigator navPath={path} setPath={setPath}/>
-      <GridContainer>
-        {renderCards()}
-      </GridContainer>
+      <ScrollContainer>
+        <GridContainer>
+          {renderCards()}
+        </GridContainer>
+      </ScrollContainer>
     </TopContainer>
   );
 }
