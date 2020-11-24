@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from .serializers import CampaignSerializer, AdvertisementSerializer
 from .models import Campaign, Advertisement
 
+import datetime
+
 
 class CampaignViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,)
@@ -76,6 +78,15 @@ def getad(request):
     """
     # how to get params for query:
     # print(request.query_params)
-    ads = Advertisement.objects.all().order_by('?').first()
-    serializer = AdvertisementSerializer(ads, many=False)
+    campaigns = Campaign.objects.filter(start_date__lte=datetime.date.today()).filter(end_date__gte=datetime.date.today())
+
+    ad_ids = set()
+    for campaign in campaigns:
+        ad_query = Campaign.objects.filter(id=campaign.id).values_list('advertisements',flat=True)
+        ad_query_set = set(ad_query)
+        ad_query_set.discard(None)
+        ad_ids.update(set(ad_query_set))
+
+    advertisement = Advertisement.objects.filter(pk__in=ad_ids).order_by('?').first()
+    serializer = AdvertisementSerializer(advertisement)
     return Response(serializer.data)

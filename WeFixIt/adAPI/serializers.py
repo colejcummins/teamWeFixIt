@@ -15,7 +15,7 @@ class AdvertisementSerializer(serializers.HyperlinkedModelSerializer):
                   'button_rendered_link')
 
 
-class CampaignSerializer(serializers.HyperlinkedModelSerializer):
+class CampaignSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
         fields = ('id', 'name', 'start_date', 'end_date', 'advertisements')
