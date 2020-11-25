@@ -11,6 +11,9 @@ const TopContainer = styled.div`
   height: 44px;
 
   background-color: #2B3032;
+  opacity: 0.9;
+  position: sticky;
+  top: 0;
 `;
 
 const PathContainer = styled.div`
