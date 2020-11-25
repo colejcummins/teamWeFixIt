@@ -12,7 +12,7 @@ const TopContainer = styled.div`
 `;
 
 const ScrollContainer = styled.div`
-  max-height: calc(100vh - 44px);
+  //max-height: calc(100vh - 44px);
   //overflow: scroll;
 `;
 
@@ -45,6 +45,7 @@ export default function CardGrid({ categories, titles }) {
     }
   }
 
+  // Render item page if we are at the end of the path
   let renderItemPage = () => {
     if (_.get(categories, path) == null && path.length > 0) {
       return <ItemPage title={path[path.length - 1]}>HELLOOOOOOOO</ItemPage>
