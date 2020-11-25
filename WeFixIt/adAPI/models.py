@@ -26,9 +26,11 @@ class Advertisement(models.Model):
         image                   - image (stored in MEDIA_ROOT)
         second_text             - 400 char field
         button_rendered_link    - 400 char field
+        clicks                  - 0-9223372036854775807 integer field
     """
     # campaign
     header_text = models.CharField(max_length=400)
-    image = models.ImageField(upload_to='')
+    image = models.ImageField(upload_to='', blank=True)
     second_text = models.CharField(max_length=400)
     button_rendered_link = models.CharField(max_length=400)
+    clicks = models.PositiveBigIntegerField(default=0)

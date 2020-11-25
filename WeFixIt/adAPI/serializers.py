@@ -18,7 +18,7 @@ class CampaignSerializer(serializers.HyperlinkedModelSerializer):
         try:
             if data['start_date'] > data['end_date']:
                 raise serializers.ValidationError("End date comes before start date in campaign.")
-        except:
+        except serializers.ValidationError:
             print("Request body missing date fields, most likely a patch editing name only")
 
         if Campaign.objects.filter(name=data['name']).count() != 0:
@@ -34,4 +34,4 @@ class AdvertisementSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Advertisement
         fields = ('id', 'header_text', 'image', 'second_text',
-                  'button_rendered_link')
+                  'button_rendered_link', 'clicks')
