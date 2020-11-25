@@ -16,5 +16,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls',
                               namespace='rest_framework')),
-    path('adclick/<int:ad_id>/', views.AdClickView.as_view())
+    path('adclick/<int:ad_id>/', views.click_ad),
+    # path('addataview/', views.AdDataView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -7,32 +7,29 @@ from .serializers import CampaignSerializer, AdvertisementSerializer
 from .models import Campaign, Advertisement
 from django.http import HttpResponse, HttpResponseNotFound
 from django.views import View
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
 
-class AdClickView(View):
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def click_ad(request, ad_id):
     """
-    Represents a click on an ad.
+    Update the database to show a user clicked on the ad with a given id.
 
-    Includes a post method that takes an id and updates the clicks field on an ad
-    model if the input is valid.
+    Args:
+        request: the HttpRequest given by the user from the URL
+        ad_id: Id of the ad clicked on.
     """
-    def post(self, request, ad_id):
-        """
-        Update the database to show a user clicked on the ad with a given id.
-
-        Args:
-            request: the HttpRequest given by the user from the URL
-            ad_id: Id of the ad clicked on.
-        """
-        try:
-            ad_object = Advertisement.objects.get(id=ad_id)
-            ad_object.clicks += 1
-            ad_object.save()
-            msg = f'Advertisement {ad_id} updated.'
-            return HttpResponse(msg, content_type='text/plain')
-        except Advertisement.DoesNotExist:
-            # ad is not found in the database, an error response should be returned
-            return HttpResponseNotFound()
+    try:
+        ad_object = Advertisement.objects.get(id=ad_id)
+        ad_object.clicks += 1
+        ad_object.save()
+        msg = f'Advertisement {ad_id} updated.'
+        return HttpResponse(msg, content_type='text/plain')
+    except Advertisement.DoesNotExist:
+        # ad is not found in the database, an error response should be returned
+        return HttpResponseNotFound()
 
 
 class CampaignViewSet(viewsets.ModelViewSet):
