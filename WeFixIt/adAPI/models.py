@@ -34,3 +34,4 @@ class Advertisement(models.Model):
     second_text = models.CharField(max_length=400)
     button_rendered_link = models.CharField(max_length=400)
     clicks = models.PositiveBigIntegerField(default=0)
+    views = models.PositiveBigIntegerField(default=0)

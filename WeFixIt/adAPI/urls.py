@@ -11,11 +11,13 @@ router.register(r'advertisements', views.AdvertisementViewSet)
 
 
 # Wire up API using automatic URL routing
-# include login URLs
+# Note: THIS CODE IS NOT TO BE USED IN A PRODUCTION ENVIRONMENT, USING STATIC PATHS LIKE THIS LEAVES THE SYSTEM
+#       VULNERABLE!
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls',
                               namespace='rest_framework')),
-    path('adclick/<int:ad_id>/', views.click_ad),
-    # path('addataview/', views.AdDataView.as_view()),
+    path('clickad/<int:ad_id>/', views.click_ad),
+    path('viewad/<int:ad_id>/', views.view_ad),
+    path('adperformance/', views.get_performance),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

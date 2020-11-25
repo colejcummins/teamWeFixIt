@@ -8,6 +8,8 @@ from .models import Campaign, Advertisement
 from django.http import HttpResponse, HttpResponseNotFound
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
+from django.template import loader
+from .ad_data import create_and_save_data
 
 
 @api_view(['POST'])
@@ -23,6 +25,38 @@ def click_ad(request, ad_id):
     try:
         ad_object = Advertisement.objects.get(id=ad_id)
         ad_object.clicks += 1
+        ad_object.save()
+        msg = f'Advertisement {ad_id} updated.'
+        return HttpResponse(msg, content_type='text/plain')
+    except Advertisement.DoesNotExist:
+        # ad is not found in the database, an error response should be returned
+        return HttpResponseNotFound()
+
+
+@api_view(['GET'])
+def get_performance(request):
+    """
+    Generates a visual representing the performance of each ad in terms of clicks and views, and returns an html
+    response with the visual in the response.
+    """
+    create_and_save_data()
+    template = loader.get_template('adAPI/performance.html')
+    return HttpResponse(template.render())
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def view_ad(request, ad_id):
+    """
+    Update the database to show a user viewed an ad with a given id.
+
+    Args:
+        request: the HttpRequest given by the user from the URL
+        ad_id: Id of the ad clicked on.
+    """
+    try:
+        ad_object = Advertisement.objects.get(id=ad_id)
+        ad_object.views += 1
         ad_object.save()
         msg = f'Advertisement {ad_id} updated.'
         return HttpResponse(msg, content_type='text/plain')
