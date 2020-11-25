@@ -13,7 +13,7 @@ class Advertisement(models.Model):
     header_text = models.CharField(max_length=400)
     image = models.ImageField(upload_to='')
     second_text = models.CharField(max_length=400)
-    button_rendered_link = models.CharField(max_length=400)
+    button_rendered_link = models.URLField()
 
 
 class Campaign(models.Model):

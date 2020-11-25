@@ -12,26 +12,24 @@ from .models import Campaign, Advertisement
 import datetime
 
 
-class CampaignViewSet(viewsets.ModelViewSet):
+"""class CampaignViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,)
-    """
-    Class that represents the page returned when /campaigns/ is accessed
 
-    Orders all campaigns by name and displays data based on the serializer class.
-    """
+    #Class that represents the page returned when /campaigns/ is accessed
+    #Orders all campaigns by name and displays data based on the serializer class.
+
     queryset = Campaign.objects.all().order_by('name')
     serializer_class = CampaignSerializer
 
 
 class AdvertisementViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminUser,)
-    """
-    Class that represents the page returned when /advertisements/ is accessed
 
-    Orders all advertisements in the database by id.
-    """
+    #Class that represents the page returned when /advertisements/ is accessed
+    #Orders all advertisements in the database by id.
+
     queryset = Advertisement.objects.all().order_by('id')
-    serializer_class = AdvertisementSerializer
+    serializer_class = AdvertisementSerializer"""
 
 
 class AdvertisementList(generics.ListCreateAPIView):
