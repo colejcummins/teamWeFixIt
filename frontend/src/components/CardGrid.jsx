@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import Card from './Card';
 import PathNavigator from './PathNavigator';
+import ItemPage from './ItemPage';
 
 const TopContainer = styled.div`
   display: flex;
@@ -12,8 +13,7 @@ const TopContainer = styled.div`
 
 const ScrollContainer = styled.div`
   max-height: calc(100vh - 44px);
-
-  overflow: scroll;
+  //overflow: scroll;
 `;
 
 const GridContainer = styled.div`
@@ -38,15 +38,24 @@ export default function CardGrid({ categories, titles }) {
   let currentKeys = _.keys(path.length > 0 ? _.get(categories, path) : categories).sort();
 
   let renderCards = () => {
-    return _.map(currentKeys, (key) => (
-      <Card title={key} path={path} setPath={setPath} />
-    ));
+    if (_.get(categories, path) != null || path.length <= 0) {
+      return _.map(currentKeys, (key) => (
+        <Card title={key} path={path} setPath={setPath} />
+      ));
+    }
+  }
+
+  let renderItemPage = () => {
+    if (_.get(categories, path) == null && path.length > 0) {
+      return <ItemPage title={path[path.length - 1]}>HELLOOOOOOOO</ItemPage>
+    }
   }
 
   return (
     <TopContainer>
       <PathNavigator navPath={path} setPath={setPath}/>
       <ScrollContainer>
+        {renderItemPage()}
         <GridContainer>
           {renderCards()}
         </GridContainer>
