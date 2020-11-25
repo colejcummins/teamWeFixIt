@@ -6,7 +6,6 @@ from rest_framework import viewsets
 from .serializers import CampaignSerializer, AdvertisementSerializer
 from .models import Campaign, Advertisement
 from django.http import HttpResponse, HttpResponseNotFound
-from django.views import View
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 
