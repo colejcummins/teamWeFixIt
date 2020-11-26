@@ -1,0 +1,36 @@
+Note: This was mostly adapted from PEP8 the standard style for Python
+    https://www.python.org/dev/peps/pep-0008/?#introduction
+
+
+Indentation: 4 spaces 
+
+Line Length: 79 characters
+
+Spaces vs Tabs: Spaces
+
+Function Length: 35 lines
+
+Constants: all capitals ex: int CONSTANT = 10 vs int constant = 10
+
+Blank Lines: Surround top level function and class definitions with two blank lines.
+
+Imports: each import should be on a seperate lines
+
+Quotes(python): single 
+
+Spaces: Spaces should be used around all operators
+    ex: 1 + 2 vs 1+2
+
+Bracing style: Non K&R style   
+    ex: void myfunc(int x){
+
+        }
+
+    instead of 
+
+    void myfunc(int x)
+    {
+
+    }
+
+
