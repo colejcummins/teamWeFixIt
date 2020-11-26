@@ -1,15 +1,16 @@
+import datetime
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
-
-# Create your views here.
-
+from django.template import loader
 from rest_framework import viewsets, status, generics
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
-from .serializers import CampaignSerializer, AdvertisementSerializer
+from .ad_data import create_and_save_data
 from .models import Campaign, Advertisement
+from .serializers import CampaignSerializer, AdvertisementSerializer
 
-import datetime
+# Create your views here.
 
 class AdvertisementList(generics.ListCreateAPIView):
     permission_classes = (IsAdminUser,)
@@ -67,3 +68,59 @@ def getad(request):
     advertisement = Advertisement.objects.filter(pk__in=ad_ids).order_by('?').first()
     serializer = AdvertisementSerializer(advertisement)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def click_ad(request, ad_id):
+    """
+    Update the database to show a user clicked on the ad with a given id.
+
+    Args:
+        request: the HttpRequest given by the user from the URL
+        ad_id: Id of the ad clicked on.
+    """
+    try:
+        ad_object = Advertisement.objects.get(id=ad_id)
+        ad_object.clicks += 1
+        ad_object.save()
+        msg = f'Advertisement {ad_id} updated.'
+        return HttpResponse(msg, content_type='text/plain')
+    except Advertisement.DoesNotExist:
+        # ad is not found in the database, an error response should be returned
+        return HttpResponseNotFound()
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def view_ad(request, ad_id):
+    """
+    Update the database to show a user viewed an ad with a given id.
+
+    Args:
+        request: the HttpRequest given by the user from the URL
+        ad_id: Id of the ad clicked on.
+    """
+    try:
+        ad_object = Advertisement.objects.get(id=ad_id)
+        ad_object.views += 1
+        ad_object.save()
+        msg = f'Advertisement {ad_id} updated.'
+        return HttpResponse(msg, content_type='text/plain')
+    except Advertisement.DoesNotExist:
+        # ad is not found in the database, an error response should be returned
+        return HttpResponseNotFound()
+
+
+@api_view(['GET'])
+def get_performance(request):
+    """
+    Generates a visual representing the performance of each ad in terms of clicks and views, and returns an html
+    response with the visual in the response.
+
+    Note:   Most browsers cache static data files, so if the file is not updating, you need to hard refresh your
+            browser with Ctrl-Shift-R
+    """
+    create_and_save_data()
+    template = loader.get_template('adAPI/performance.html')
+    return HttpResponse(template.render())

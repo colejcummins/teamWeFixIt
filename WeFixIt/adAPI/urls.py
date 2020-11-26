@@ -8,7 +8,8 @@ from django.conf.urls.static import static
 router = routers.DefaultRouter()
 
 # Wire up API using automatic URL routing
-# include login URLs
+# Note: THIS CODE IS NOT TO BE USED IN A PRODUCTION ENVIRONMENT, USING STATIC PATHS LIKE THIS LEAVES THE SYSTEM
+#       VULNERABLE!
 urlpatterns = [
     path('', include(router.urls)),
 
@@ -17,8 +18,10 @@ urlpatterns = [
     path('advertisements/<int:pk>', views.AdvertisementDetail.as_view()),
     path('campaigns/', views.CampaignList.as_view()),
     path('campaigns/<int:pk>', views.CampaignDetail.as_view()),
+    path('clickad/<int:ad_id>/', views.click_ad),
+    path('viewad/<int:ad_id>/', views.view_ad),
+    path('adperformance/', views.get_performance),
 
     path('api-auth/', include('rest_framework.urls',
                               namespace='rest_framework')),
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
