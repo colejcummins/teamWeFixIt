@@ -53,7 +53,14 @@ export default function Card({ title, path, setPath }) {
 
   return (
     <CardContainer ref={visibleRef} onClick={() => setPath(_.concat(path, title))}>
-      {loading ? (<ReactSimpleSpinner size={48} lineFgColor={'#2176FF'} lineBgColor={'#FFFFFF'} style={{padding: '0px 5px'}}/>) : (<CardImage src={image} />)}
+      {loading ?
+        (
+          <ReactSimpleSpinner size={48} lineFgColor={'#2176FF'} lineBgColor={'#FFFFFF'} style={{padding: '0px 5px'}}/>
+        ) :
+        (
+          <CardImage src={image} />
+        )
+      }
       <CardText>{title}</CardText>
     </CardContainer>
   )
