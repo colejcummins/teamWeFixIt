@@ -34,4 +34,4 @@ class AdvertisementSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Advertisement
         fields = ('id', 'header_text', 'image', 'second_text',
-                  'button_rendered_link', 'clicks')
+                  'button_rendered_link', 'clicks', 'views')

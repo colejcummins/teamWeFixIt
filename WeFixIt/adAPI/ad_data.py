@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from .models import Advertisement
+import numpy as np
 
 
 def create_and_save_data():
@@ -12,9 +13,14 @@ def create_and_save_data():
     click_rates = []
     headers = []
     for ad in advertisements:
+        if ad.views == 0:
+            break
         click_rates.append(ad.clicks / ad.views)
         headers.append(ad.header_text)
-    fig = plt.figure()
-    ax = fig.ad_axes([0, 0, 1, 1])
-    ax.bar(headers, click_rates)
-    plt.savefig('static/adAPI/performance.png')
+    y_pos = np.arange(len(headers))
+
+    plt.bar(y_pos, click_rates, align='center', alpha=.5)
+    plt.xticks(y_pos, headers)
+    plt.ylabel('Click Through Rate')
+    plt.title('Ad Headers and Click Through Rate')
+    plt.savefig('adAPI/static/adAPI/performance.png')

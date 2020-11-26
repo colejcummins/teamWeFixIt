@@ -38,6 +38,9 @@ def get_performance(request):
     """
     Generates a visual representing the performance of each ad in terms of clicks and views, and returns an html
     response with the visual in the response.
+
+    Note:   Most browsers cache static data files, so if the file is not updating, you need to hard refresh your
+            browser with Ctrl-Shift-R
     """
     create_and_save_data()
     template = loader.get_template('adAPI/performance.html')
