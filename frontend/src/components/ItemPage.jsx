@@ -15,8 +15,7 @@ const PageContainer = styled.span`
   background-color: #FFFFFF;
   border-radius: 6px;
   padding: 20px;
-  min-width: 700px;
-  max-width: 990px;
+  width: 990px;
 `;
 
 const ItemTitle = styled.div`
