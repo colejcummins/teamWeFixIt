@@ -11,7 +11,6 @@ const TopContainer = styled.div`
   height: 44px;
 
   background-color: #2B3032;
-  opacity: 0.9;
   position: sticky;
   top: 0;
 `;
@@ -47,7 +46,7 @@ export default function PathNavigator({ navPath, setPath }) {
     <TopContainer>
       <PathContainer>
         {_.map(path, (val, ind) => (
-          <PathSpan>
+          <PathSpan key={ind}>
             <PathText onClick={() => setPath(_.slice(navPath, 0, ind))}>{val}</PathText>
             {(ind < (path.length - 1)) ? (<ChevronRight style={{color: '#2176FF', padding: '0px 5px'}}/>) : (<div/>)}
           </PathSpan>
