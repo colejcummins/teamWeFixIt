@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,10 +28,29 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Where images are stored on the server
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# prefix to the image urls
+MEDIA_URL = '/media/'
+
+
+# Must be admin by default unless explicitly specified in the view.
+# permission_classes = [IsAuthenticated]
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication']
+}
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'adAPI.apps.AdapiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
