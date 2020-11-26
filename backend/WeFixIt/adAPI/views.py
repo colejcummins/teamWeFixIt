@@ -4,11 +4,14 @@ from django.shortcuts import render
 from django.template import loader
 from rest_framework import viewsets, status, generics
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAdminUser, AllowAny
+from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated, SAFE_METHODS
 from rest_framework.response import Response
 from .ad_data import create_and_save_data
 from .models import Campaign, Advertisement
 from .serializers import CampaignSerializer, AdvertisementSerializer
+from rest_framework.renderers import JSONRenderer
+
+
 
 # Create your views here.
 
@@ -124,3 +127,39 @@ def get_performance(request):
     create_and_save_data()
     template = loader.get_template('adAPI/performance.html')
     return HttpResponse(template.render())
+
+
+@api_view(['Delete'])
+@permission_classes([IsAdminUser])
+def nuke(request, format = None):
+    campaigns = Campaign.objects.all()
+    advertisements = Advertisement.objects.all()
+    deletedCampaignsList = []
+    deletedAdList = []
+
+    for campaign in campaigns:
+        serializer = CampaignSerializer(campaign)
+
+        campaignName  = serializer.data['name']
+        deletedCampaignsList.append(campaignName)
+
+    for ad in advertisements:
+        serializer = AdvertisementSerializer(ad)
+
+        adID = serializer.data['id']
+        deletedAdList.append(adID)
+
+
+    content = {
+        'status' : 'requested allowed... nuked',
+        'deletedCampaigns' : deletedCampaignsList,
+        'deletedAdvertisements' : deletedAdList
+    }
+
+    
+    
+    campaigns.delete()
+    advertisements.delete()
+   
+
+    return Response(content)
