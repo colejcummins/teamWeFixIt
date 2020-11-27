@@ -48,7 +48,14 @@ export default function PathNavigator({ navPath, setPath }) {
         {_.map(path, (val, ind) => (
           <PathSpan key={ind}>
             <PathText onClick={() => setPath(_.slice(navPath, 0, ind))}>{val}</PathText>
-            {(ind < (path.length - 1)) ? (<ChevronRight style={{color: '#2176FF', padding: '0px 5px'}}/>) : (<div/>)}
+            {(ind < (path.length - 1)) ?
+              (
+                <ChevronRight style={{color: '#2176FF', padding: '0px 5px'}}/>
+              ) :
+              (
+                <div/>
+              )
+            }
           </PathSpan>
         ))}
       </PathContainer>
