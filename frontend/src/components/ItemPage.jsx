@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import {fetchData} from './Window';
 import AdCard from './AdCard';
 
 
 const PageContainer = styled.span`
   display: block;
   align-items: center;
-  width: 70vw;
+
+  margin-top: 10px;
   padding: 5px 10px;
 
   background-color: #FFFFFF;
   border-radius: 6px;
   padding: 20px;
-  min-width: 700px;
+  width: 990px;
 `;
 
 const ItemTitle = styled.div`
@@ -42,25 +44,15 @@ export default function ItemPage({ title }) {
   let [itemImage, setItemImage] = useState(null);
 
   // Fetch item description and image
-  useEffect(() => {
-    async function fetchData() {
-      const url = "https://www.ifixit.com/api/2.0/wikis/CATEGORY/" + title;
-      await fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          try {
-            setItemDescription(data.description);
-            setItemImage(data.image.standard);
-            console.log(data.image.standard);
-          } catch (e) {
-            throw new Error(`Data failure: ${data}`);
-          }
-        })
-        .catch(e => console.error('Fetching error in Window: ', e));
-    }
-    fetchData();
-  }
-  , []);
+  let fetchItemPage = () => {
+    fetchData("https://www.ifixit.com/api/2.0/wikis/CATEGORY/" + title,
+    (data) => {
+      setItemDescription(data.description);
+      setItemImage(data.image.standard);
+    });
+  };
+
+  useEffect(() => fetchItemPage(), []);
 
   return (
     <div>
