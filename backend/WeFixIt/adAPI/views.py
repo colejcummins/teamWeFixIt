@@ -131,35 +131,31 @@ def get_performance(request):
 
 @api_view(['Delete'])
 @permission_classes([IsAdminUser])
-def nuke(request, format = None):
+def nuke(request, format=None):
     campaigns = Campaign.objects.all()
     advertisements = Advertisement.objects.all()
-    deletedCampaignsList = []
-    deletedAdList = []
+    deleted_campaigns_list = []
+    deleted_ad_list = []
 
     for campaign in campaigns:
         serializer = CampaignSerializer(campaign)
 
-        campaignName  = serializer.data['name']
-        deletedCampaignsList.append(campaignName)
+        campaign_name = serializer.data['name']
+        deleted_campaigns_list.append(campaign_name)
 
     for ad in advertisements:
         serializer = AdvertisementSerializer(ad)
 
-        adID = serializer.data['id']
-        deletedAdList.append(adID)
-
+        ad_id = serializer.data['id']
+        deleted_ad_list.append(ad_id)
 
     content = {
-        'status' : 'requested allowed... nuked',
-        'deletedCampaigns' : deletedCampaignsList,
-        'deletedAdvertisements' : deletedAdList
+        'status': 'requested allowed... nuked',
+        'deletedCampaigns': deleted_campaigns_list,
+        'deletedAdvertisements': deleted_ad_list
     }
 
-    
-    
     campaigns.delete()
     advertisements.delete()
-   
 
     return Response(content)
