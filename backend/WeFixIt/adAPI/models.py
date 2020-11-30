@@ -1,5 +1,5 @@
 from django.db import models
-
+from django_countries.fields import CountryField
 
 class Advertisement(models.Model):
     """
@@ -27,11 +27,13 @@ class Campaign(models.Model):
         name            -   100 char field
         start_date      -   date field
         end_date        -   date field (must not be before start_date)
+        countries       -   countries where ads from the campaign will be run
         advertisements  -   all advertisements run in this campaign
     """
     name = models.CharField(max_length=100)
     start_date = models.DateField()
     end_date = models.DateField()
+    countries = CountryField(multiple=True)
     advertisements = models.ManyToManyField(Advertisement)
 
     def __str__(self):

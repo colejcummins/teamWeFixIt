@@ -50,6 +50,7 @@ REST_FRAMEWORK = {
 
 INSTALLED_APPS = [
     'rest_framework',
+    'django_countries',
     'adAPI.apps.AdapiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
