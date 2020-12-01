@@ -1,6 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
 
+
 class Advertisement(models.Model):
     """
     Represents an advertisement created by an administrator.

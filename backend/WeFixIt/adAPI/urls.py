@@ -19,7 +19,6 @@ urlpatterns = [
     path('viewad/<int:ad_id>/', views.view_ad),
     path('adperformance/', views.get_performance),
     path('nuke/', views.nuke),
-
     path('api-auth/', include('rest_framework.urls',
                               namespace='rest_framework')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,15 +1,13 @@
 import datetime
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
 from django.template import loader
-from rest_framework import viewsets, status, generics
+from rest_framework import generics
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated, SAFE_METHODS
+from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
-from .ad_data import create_and_save_data
+from .ad_data import create_and_save_data, select_ad_by_click_rate
 from .models import Campaign, Advertisement
 from .serializers import CampaignSerializer, AdvertisementSerializer
-from rest_framework.renderers import JSONRenderer
 
 
 class AdvertisementList(generics.ListCreateAPIView):
@@ -64,12 +62,12 @@ def get_ad(request):
 
     ad_ids = set()
     for campaign in campaigns:
-        ad_query = Campaign.objects.filter(id=campaign.id).values_list('advertisements',flat=True)
+        ad_query = Campaign.objects.filter(id=campaign.id).values_list('advertisements', flat=True)
         ad_query_set = set(ad_query)
         ad_query_set.discard(None)
         ad_ids.update(set(ad_query_set))
 
-    advertisement = Advertisement.objects.filter(pk__in=ad_ids).order_by('?').first()
+    advertisement = select_ad_by_click_rate(Advertisement.objects.filter(pk__in=ad_ids))
     serializer = AdvertisementSerializer(advertisement)
     return Response(serializer.data)
 
