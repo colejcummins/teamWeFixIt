@@ -12,9 +12,6 @@ from .serializers import CampaignSerializer, AdvertisementSerializer
 from rest_framework.renderers import JSONRenderer
 
 
-
-# Create your views here.
-
 class AdvertisementList(generics.ListCreateAPIView):
     permission_classes = (IsAdminUser,)
     """
@@ -53,7 +50,7 @@ class CampaignDetail(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def getad(request):
+def get_ad(request):
     """
     Function that randomly returns a single ad in the database.
     """
@@ -62,7 +59,7 @@ def getad(request):
 
     # how to get params for query:
     if 'country' in request.query_params.keys():
-        if request.query_params['country'] != []:
+        if request.query_params['country']:
             campaigns = campaigns.filter(countries__contains=request.query_params['country'])
 
     ad_ids = set()
