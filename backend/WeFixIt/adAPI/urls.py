@@ -6,10 +6,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+router = routers.DefaultRouter()
+
 # Wire up API using automatic URL routing
 # Note: THIS CODE IS NOT TO BE USED IN A PRODUCTION ENVIRONMENT, USING STATIC PATHS LIKE THIS LEAVES THE SYSTEM
 #       VULNERABLE!
 urlpatterns = [
+    path('', include(router.urls)),
+
     path('getad/', views.get_ad),
     path('advertisements/', views.AdvertisementList.as_view()),
     path('advertisements/<int:pk>', views.AdvertisementDetail.as_view()),
@@ -19,6 +23,7 @@ urlpatterns = [
     path('viewad/<int:ad_id>/', views.view_ad),
     path('adperformance/', views.get_performance),
     path('nuke/', views.nuke),
+
     path('api-auth/', include('rest_framework.urls',
                               namespace='rest_framework')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
