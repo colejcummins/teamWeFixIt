@@ -129,6 +129,7 @@ def get_performance(request):
     """
     create_and_save_data()
     template = loader.get_template('adAPI/performance.html')
+    print("got here!!")
     return HttpResponse(template.render())
 
 
