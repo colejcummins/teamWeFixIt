@@ -6,7 +6,9 @@ from django.conf.urls.static import static
 
 
 # Wire up API using automatic URL routing
-# Note: THIS CODE IS NOT TO BE USED IN A PRODUCTION ENVIRONMENT, STATIC FILES ARE VERY INEFFICIENT
+# Note: THIS CODE IS NOT TO BE USED IN A PRODUCTION ENVIRONMENT
+# STATIC FILES ARE VERY INEFFICIENT AND OFTEN INSECURE.
+
 urlpatterns = [
     path('advertisements/getad/', views.get_ad),
     path('advertisements/', views.AdvertisementList.as_view()),

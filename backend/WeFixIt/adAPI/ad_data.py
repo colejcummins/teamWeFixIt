@@ -6,8 +6,9 @@ from random import choices
 
 def create_and_save_data():
     """
-    create_and_save_data queries the Advertisement objects and creates a graph of the advertisements and
-    displays each by name and click-through-rate. The generated image is then saved to
+    create_and_save_data queries the Advertisement objects and creates a
+    graph of the advertisements and displays each by name and
+    click-through-rate. The generated image is then saved to
     adAPI/static/adAPI/performance.png
     """
     plt.switch_backend('Agg')
@@ -31,9 +32,11 @@ def create_and_save_data():
 
 def select_ad_by_click_rate(ads):
     """
-    Given a queryset of ads, returns an ad based on a random selection, weighted by the click-through rate of the ad.
+    Given a queryset of ads, returns an ad based on a random selection,
+    weighted by the click-through rate of the ad.
 
-    Each ad is initially given a weight of 1 click and 1 view so it has a chance to be shown.
+    Each ad is initially given a weight of 1 click and 1 view so it has a
+    chance to be shown.
 
     Args:
         ads: A queryset of ads

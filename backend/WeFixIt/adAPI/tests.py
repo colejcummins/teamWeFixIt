@@ -1,17 +1,16 @@
 from django.test import TestCase, Client
 from .models import Advertisement
-import random
-import string
 
 
 class AdvertisementClickTestCase(TestCase):
     """
-    Test Suite that checks if an ad's clicks field updates when a POST request is sent to
-    /clickad/{id} and when an ad is viewed through a POST request to /viewad/{id}, it updates the views field
-    of the model.
+    Test Suite that checks if an ad's clicks field updates when a POST request
+    is sent to /clickad/{id}. When an ad is viewed through a POST request
+    to /viewad/{id}, it updates the views field of the model.
     """
     def setUp(self):
-        Advertisement.objects.create(header_text='test', second_text='second test',
+        Advertisement.objects.create(header_text='test',
+                                     second_text='second test',
                                      button_rendered_link='test.com')
 
     def test_click_on_ad(self):

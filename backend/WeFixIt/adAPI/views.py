@@ -23,7 +23,8 @@ class AdvertisementList(generics.ListCreateAPIView):
 class AdvertisementDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAdminUser,)
     """
-    Class that allows you to create, update, or destroy advertisements in the database
+    Class that allows you to create, update, or destroy advertisements
+    in the database
     """
     queryset = Advertisement.objects.all().order_by('id')
     serializer_class = AdvertisementSerializer
@@ -41,7 +42,8 @@ class CampaignList(generics.ListCreateAPIView):
 class CampaignDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAdminUser,)
     """
-    Class that allows you to create, update, or destroy campaigns in the database
+    Class that allows you to create, update, or destroy campaigns in the
+    database
     """
     queryset = Campaign.objects.all().order_by('name')
     serializer_class = CampaignSerializer
@@ -70,7 +72,7 @@ def get_ad(request):
 
     advertisement = select_ad_by_click_rate(Advertisement.objects.filter(pk__in=ad_ids))
     if advertisement is None:
-        return JsonResponse({"detail" : "not found"})
+        return JsonResponse({"detail": "not found"})
     serializer = AdvertisementSerializer(advertisement)
     return Response(serializer.data)
 
@@ -130,11 +132,12 @@ def view_ad(request, ad_id):
 @api_view(['GET'])
 def get_performance(request):
     """
-    Generates a visual representing the performance of each ad in terms of clicks and views, and returns an html
-    response with the visual within the template.
+    Generates a visual representing the performance of each ad in terms of
+    clicks and views, and returns an html response with the visual within
+    the template.
 
-    Most browsers cache static data files, so if the file is not updating, you need to hard refresh your
-    browser with Ctrl-Shift-R
+    Most browsers cache static data files, so if the file is not updating, you
+    need to hard refresh your browser with Ctrl-Shift-R
 
     Args:
         request: An HttpRequest that must be a GET request
