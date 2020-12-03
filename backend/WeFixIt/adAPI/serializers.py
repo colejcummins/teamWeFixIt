@@ -8,7 +8,7 @@ from .models import Campaign, Advertisement
 class AdvertisementSerializer(serializers.ModelSerializer):
     """
     Handles the API requests to create/delete/update Advertisements automatically
-    using the fields of the Advertisement.
+    using the fields of the Advertisement model.
     """
     class Meta:
         model = Advertisement
@@ -16,10 +16,13 @@ class AdvertisementSerializer(serializers.ModelSerializer):
 
 
 class CampaignSerializer(CountryFieldMixin, serializers.ModelSerializer):
+    """
+    Handles the API requests to create/delete/update Campaigns automatically
+    using the fields of the Campaign model.
+    """
     class Meta:
         model = Campaign
         fields = '__all__'
-
 
     def validate(self, data):
         """
@@ -32,7 +35,4 @@ class CampaignSerializer(CountryFieldMixin, serializers.ModelSerializer):
                 raise serializers.ValidationError("End date comes before start date in campaign.")
         except serializers.ValidationError:
             print("Request body missing date fields, most likely a patch editing name only")
-
-        #if Campaign.objects.filter(name=data['name']).count() != 0:
-        #    raise serializers.ValidationError("Campaigns must have unique names,", data['name'], "already exists.")
         return data

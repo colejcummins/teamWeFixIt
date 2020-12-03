@@ -11,7 +11,6 @@ from .serializers import CampaignSerializer, AdvertisementSerializer
 from django.http import JsonResponse
 
 
-
 class AdvertisementList(generics.ListCreateAPIView):
     permission_classes = (IsAdminUser,)
     """

@@ -10,7 +10,6 @@ def create_and_save_data():
     displays each by name and click-through-rate. The generated image is then saved to
     adAPI/static/adAPI/performance.png
     """
-    # needed to avoid mpl multithreading error 
     plt.switch_backend('Agg')
 
     advertisements = Advertisement.objects.all()
