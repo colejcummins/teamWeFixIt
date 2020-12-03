@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from .ad_data import create_and_save_data, select_ad_by_click_rate
 from .models import Campaign, Advertisement
 from .serializers import CampaignSerializer, AdvertisementSerializer
+from django.http import JsonResponse
+
 
 
 class AdvertisementList(generics.ListCreateAPIView):
@@ -68,6 +70,8 @@ def get_ad(request):
         ad_ids.update(set(ad_query_set))
 
     advertisement = select_ad_by_click_rate(Advertisement.objects.filter(pk__in=ad_ids))
+    if advertisement == None:
+        return JsonResponse({"detail" : "not found"})
     serializer = AdvertisementSerializer(advertisement)
     return Response(serializer.data)
 
