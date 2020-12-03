@@ -4,8 +4,14 @@ from django_countries.fields import CountryField
 
 class Advertisement(models.Model):
     """
-    Represents an advertisement created by an administrator.
+    Represents an advertisement in the database.
 
+    The image field is optional. Images uploaded through the server will be
+    stored in /media/ in the server directory. Images can be accessed through
+    the url /media/{image_file_name}, where image_file_name is the name of the
+    uploaded file.
+
+    Attributes:
         header_text             - 400 char field
         image                   - image (stored in MEDIA_ROOT)
         second_text             - 400 char field

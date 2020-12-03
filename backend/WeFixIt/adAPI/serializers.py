@@ -7,8 +7,7 @@ from .models import Campaign, Advertisement
 
 class AdvertisementSerializer(serializers.ModelSerializer):
     """
-    Handles the API requests to create/delete/update Advertisements automatically
-    using the fields of the Advertisement model.
+    Allows the data of an Advertisement object to been viewed as a JSON within the web server.
     """
     class Meta:
         model = Advertisement
@@ -17,8 +16,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
 
 class CampaignSerializer(CountryFieldMixin, serializers.ModelSerializer):
     """
-    Handles the API requests to create/delete/update Campaigns automatically
-    using the fields of the Campaign model.
+    Allows the data of a Campaign object to been viewed as a JSON within the web server.
     """
     class Meta:
         model = Campaign
@@ -28,7 +26,12 @@ class CampaignSerializer(CountryFieldMixin, serializers.ModelSerializer):
         """
         Checks that end_date is not earlier than start_date and that campaign name is unique.
 
-        Throws a serializers. ValidationError if data is incorrectly entered.
+        Throws a serializers.ValidationError if data is incorrectly entered.
+
+        Args:
+            data: a singular Campaign object to be added to the database
+        Return:
+            data if properly entered
         """
         try:
             if data['start_date'] > data['end_date']:

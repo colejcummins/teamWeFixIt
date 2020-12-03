@@ -69,7 +69,7 @@ def get_ad(request):
         ad_ids.update(set(ad_query_set))
 
     advertisement = select_ad_by_click_rate(Advertisement.objects.filter(pk__in=ad_ids))
-    if advertisement == None:
+    if advertisement is None:
         return JsonResponse({"detail" : "not found"})
     serializer = AdvertisementSerializer(advertisement)
     return Response(serializer.data)
@@ -80,10 +80,15 @@ def get_ad(request):
 def click_ad(request, ad_id):
     """
     Update the database to show a user clicked on the ad with a given id.
+    This function is not idempotent, and repeated requests will result in
+    different values.
 
     Args:
         request: the HttpRequest given by the user from the URL
         ad_id: Id of the ad clicked on.
+    Return:
+        An HttpResponse indicating success/failure of POST request.
+        Request fails only if ad with id=id not present.
     """
     try:
         ad_object = Advertisement.objects.get(id=ad_id)
@@ -92,7 +97,6 @@ def click_ad(request, ad_id):
         msg = f'Advertisement {ad_id} updated.'
         return HttpResponse(msg, content_type='text/plain')
     except Advertisement.DoesNotExist:
-        # ad is not found in the database, an error response should be returned
         return HttpResponseNotFound()
 
 
@@ -102,9 +106,15 @@ def view_ad(request, ad_id):
     """
     Update the database to show a user viewed an ad with a given id.
 
+    This function is not idempotent, and repeated requests will result in
+    different values.
+
     Args:
         request: the HttpRequest given by the user from the URL
         ad_id: Id of the ad clicked on.
+    Return:
+        An HttpResponse indicating success/failure of POST request.
+        Request fails only if ad with id=id not present.
     """
     try:
         ad_object = Advertisement.objects.get(id=ad_id)
@@ -121,10 +131,15 @@ def view_ad(request, ad_id):
 def get_performance(request):
     """
     Generates a visual representing the performance of each ad in terms of clicks and views, and returns an html
-    response with the visual in the response.
+    response with the visual within the template.
 
-    Note:   Most browsers cache static data files, so if the file is not updating, you need to hard refresh your
-            browser with Ctrl-Shift-R
+    Most browsers cache static data files, so if the file is not updating, you need to hard refresh your
+    browser with Ctrl-Shift-R
+
+    Args:
+        request: An HttpRequest that must be a GET request
+    Return:
+        HttpResponse containing a template containing the performance image.
     """
     create_and_save_data()
     template = loader.get_template('adAPI/performance.html')
