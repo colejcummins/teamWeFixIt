@@ -1,1 +1,3 @@
 .DS_Store
+/backend/AdData/
+/backend/db.sqlite3~HEAD
