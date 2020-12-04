@@ -9,6 +9,7 @@ from django.conf.urls.static import static
 # Note: THIS CODE IS NOT TO BE USED IN A PRODUCTION ENVIRONMENT
 # STATIC FILES ARE VERY INEFFICIENT AND OFTEN INSECURE.
 
+urlpatterns = [
     path('campaigns/', views.CampaignList.as_view()),
     path('campaigns/<int:pk>', views.CampaignDetail.as_view()),
 
@@ -23,6 +24,5 @@ from django.conf.urls.static import static
 
     path('nuke/', views.nuke),
 
-    path('api-auth/', include('rest_framework.urls',
-                              namespace='rest_framework')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
