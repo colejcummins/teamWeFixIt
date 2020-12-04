@@ -11,7 +11,6 @@ class Advertisement(models.Model):
         second_text             - 400 char field
         button_rendered_link    - 400 char field
         clicks                  - 0-9223372036854775807 integer field
-        views                   - 0-9223372036854775807 integer field
     """
     header_text = models.CharField(max_length=400)
     image = models.ImageField(upload_to='', blank=True)
