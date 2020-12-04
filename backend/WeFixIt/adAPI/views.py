@@ -9,6 +9,7 @@ from .ad_data import create_and_save_data, select_ad_by_click_rate
 from .models import Campaign, Advertisement
 from .serializers import CampaignSerializer, AdvertisementSerializer
 from django.http import JsonResponse
+import csv
 
 
 class AdvertisementList(generics.ListCreateAPIView):
@@ -58,7 +59,6 @@ def get_ad(request):
     print(request.query_params)
     campaigns = Campaign.objects.filter(start_date__lte=datetime.date.today()).filter(end_date__gte=datetime.date.today())
 
-    # how to get params for query:
     if 'country' in request.query_params.keys():
         if request.query_params['country']:
             campaigns = campaigns.filter(countries__contains=request.query_params['country'])
@@ -147,6 +147,28 @@ def get_performance(request):
     create_and_save_data()
     template = loader.get_template('adAPI/performance.html')
     return HttpResponse(template.render())
+
+
+@api_view(['GET'])
+def get_csv(request):
+    """
+    Generates a CSV of analytics data containing the header text, number of clicks,
+    and number of views.
+
+    Uses the CSV writer because the HTTPResponse is a file-like object.
+    """
+    all_records = Advertisement.objects.all().values_list('header_text', 'clicks', 'views')
+    response = HttpResponse(content_type='text/csv')
+
+    csv_writer = csv.writer(response)
+    csv_writer.writerow(['Header Text', 'Clicks', 'Views'])
+
+    for record in all_records:
+        csv_writer.writerow(record)
+
+    response['Content-Disposition'] = 'attachment; filename="analytics.csv"'
+
+    return response
 
 
 @api_view(['Delete'])

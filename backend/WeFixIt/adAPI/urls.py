@@ -11,6 +11,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('advertisements/getad/', views.get_ad),
+    path('advertisements/getcsv/', views.get_csv),
     path('advertisements/', views.AdvertisementList.as_view()),
     path('advertisements/<int:pk>', views.AdvertisementDetail.as_view()),
     path('campaigns/', views.CampaignList.as_view()),
