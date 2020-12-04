@@ -13,18 +13,18 @@ router = routers.DefaultRouter()
 #       VULNERABLE!
 urlpatterns = [
     path('', include(router.urls)),
+
     path('campaigns/', views.CampaignList.as_view()),
     path('campaigns/<int:pk>', views.CampaignDetail.as_view()),
-
 
     path('advertisements/', views.AdvertisementList.as_view()),
     path('advertisements/<int:pk>', views.AdvertisementDetail.as_view()),
     path('advertisements/getad/', views.get_ad),
-    path('advertisements/getcsv/', views.get_csv),
 
     path('adperformance/', views.get_performance),
     path('adperformance/clickad/<int:ad_id>/', views.click_ad),
     path('adperformance/viewad/<int:ad_id>/', views.view_ad),
+    path('adperformance/getcsv/', views.get_csv),
 
     path('nuke/', views.nuke),
 
