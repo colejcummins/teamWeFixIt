@@ -22,7 +22,7 @@ def create_and_save_data():
         if ad.views == 0:
             break
         click_rates.append(ad.clicks / ad.views)
-        headers.append(ad.header_text)
+        headers.append(ad.id)
     y_pos = np.arange(len(headers))
 
     plt.bar(y_pos, click_rates, align='center', alpha=.5)
