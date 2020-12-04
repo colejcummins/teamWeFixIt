@@ -17,10 +17,11 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, data):
-        mimetype,encoding = mimetypes.guess_type(data['image'].split("?")[0])
+        mimetype, encoding = mimetypes.guess_type(data['image'].split("?")[0])
         if (mimetype and mimetype.startswith('image')):
             return data
         raise serializers.ValidationError("Please enter a valid image URL")
+
 
 class CampaignSerializer(CountryFieldMixin, serializers.ModelSerializer):
     """

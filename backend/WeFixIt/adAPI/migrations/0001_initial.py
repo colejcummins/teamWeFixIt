@@ -5,7 +5,6 @@ import django_countries.fields
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -35,8 +34,10 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100)),
                 ('start_date', models.DateField()),
                 ('end_date', models.DateField()),
-                ('countries', django_countries.fields.CountryField(max_length=746, multiple=True)),
-                ('advertisements', models.ManyToManyField(to='adAPI.Advertisement')),
+                ('countries', django_countries.fields.
+                 CountryField(max_length=746, multiple=True)),
+                ('advertisements',
+                 models.ManyToManyField(to='adAPI.Advertisement')),
             ],
         ),
     ]
