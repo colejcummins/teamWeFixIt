@@ -3,6 +3,8 @@ import { ReactSimpleSpinner } from 'reactjs-simple-spinner';
 import styled from 'styled-components';
 
 import CardGrid from './CardGrid'
+import AdCreationPanel from './AdCreationPanel'
+
 
 // Global colors for styling
 export const colors = {
@@ -41,11 +43,21 @@ const ContentContainer = styled.div`
   justify-content: center;
 `;
 
+const AdButton = styled.button`
+  position: absolute;
+  z-index:4;
+  right: 0;
+  padding: 5px;
+  border-radius: 7px;
+  margin: 10px;
+`;
+
 export default function Window() {
 
   let [categories, setCategories] = useState(null);
   let [titles, setTitles] = useState(null);
   let [loading, setLoading] = useState(true);
+  let [adPanelOn, setAdPanelOn] = useState(false);
 
   let fetchWindow = () => {
     fetchData("https://www.ifixit.com/api/2.0/wikis/CATEGORY?display=hierarchy",
@@ -61,6 +73,10 @@ export default function Window() {
 
   return (
     <WindowContainer>
+      <AdButton onClick={() => setAdPanelOn(!adPanelOn)}> Create Ad </AdButton>
+      {adPanelOn ? 
+        (<AdCreationPanel toggleAdPanel={() => setAdPanelOn(false)}></AdCreationPanel>) : (<div></div>)
+      }
       <ContentContainer>
         {loading ?
           (
