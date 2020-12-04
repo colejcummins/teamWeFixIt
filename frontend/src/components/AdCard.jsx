@@ -47,7 +47,7 @@ export default function AdCard({ title, description }) {
   // Server has to be running for the endpoint to work
   let cors = 'https://cors-anywhere.herokuapp.com/';
   let fetchAd = () => {
-    fetchData('http://127.0.0.1:8000/getad/',
+    fetchData('http://127.0.0.1:8000/advertisements/getad/',
     (data) => {
       setLoading(false);
       console.log(data);
