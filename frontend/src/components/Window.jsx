@@ -11,13 +11,13 @@ export const colors = {
   blue: '#2176FF',
 };
 
-export const fetchData = async (url, func) => {
+export const fetchData = async (url, func, fields={}, onFinally=() => {}) => {
   await fetch(url,
   {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    mode: 'cors',
+    ...fields,
   })
   .then(res => res.json())
   .then(data => {
@@ -28,6 +28,7 @@ export const fetchData = async (url, func) => {
     }
   })
   .catch(e => console.error('Fetching error in Window: ', e));
+  onFinally();
 }
 
 const WindowContainer = styled.div`

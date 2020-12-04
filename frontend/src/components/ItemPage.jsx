@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ReactSimpleSpinner } from 'reactjs-simple-spinner';
 import styled from 'styled-components';
 
 import {fetchData} from './Window';
@@ -47,6 +48,7 @@ export default function ItemPage({ title }) {
 
   let [itemDescription, setItemDescription] = useState(null);
   let [itemImage, setItemImage] = useState(null);
+  let [loading, setLoading] = useState(true);
 
   // Fetch item description and image
   let fetchItemPage = () => {
@@ -54,6 +56,7 @@ export default function ItemPage({ title }) {
     (data) => {
       setItemDescription(data.description);
       setItemImage(data.image.standard);
+      setLoading(false);
     });
   };
 
@@ -61,11 +64,20 @@ export default function ItemPage({ title }) {
 
   return (
     <PageContainer>
-      <ItemContainer>
-        <ItemTitle>{title}</ItemTitle>
-        <CardText> {itemDescription} </CardText>
-        <ItemImage src={itemImage}></ItemImage>
-      </ItemContainer>
+      {loading ?
+        (
+          <ItemContainer>
+            <ReactSimpleSpinner size={80} lineFgColor={'#2176FF'} lineBgColor={'#FFFFFF'} style={{padding: '0px 5px'}}/>
+          </ItemContainer>
+        ) :
+        (
+          <ItemContainer>
+            <ItemTitle>{title}</ItemTitle>
+            <CardText> {itemDescription} </CardText>
+            <ItemImage src={itemImage}></ItemImage>
+          </ItemContainer>
+        )
+      }
       <AdCard title="Here lies an ad." description="This is an ad description."/>
     </PageContainer>
   )
