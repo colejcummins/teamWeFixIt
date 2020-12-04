@@ -130,6 +130,7 @@ def view_ad(request, ad_id):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def get_performance(request):
     """
     Generates a visual representing the performance of each ad in terms of
@@ -146,6 +147,7 @@ def get_performance(request):
     """
     create_and_save_data()
     template = loader.get_template('adAPI/performance.html')
+    print("got here!!")
     return HttpResponse(template.render())
 
 
