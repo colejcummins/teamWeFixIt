@@ -15,9 +15,10 @@ export const fetchData = async (url, func) => {
   await fetch(url,
   {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'authorization': "Basic bWljaGFlbG1vc2NoaXR0bzoxMW1pY2hhZWwxMQ==",
+      'Access-Control-Allow-Origin': 'http://127.0.0.1:8000/',
     },
-    mode: 'cors',
   })
   .then(res => res.json())
   .then(data => {
