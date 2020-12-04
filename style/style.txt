@@ -4,7 +4,7 @@ Note: This was mostly adapted from PEP8 the standard style for Python
 
 Indentation: 4 spaces 
 
-Line Length: 79 characters
+Line Length: 120 characters
 
 Spaces vs Tabs: Spaces
 
