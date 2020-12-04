@@ -57,7 +57,6 @@ def get_ad(request):
     print(request.query_params)
     campaigns = Campaign.objects.filter(start_date__lte=datetime.date.today()).filter(end_date__gte=datetime.date.today())
 
-    # how to get params for query:
     if 'country' in request.query_params.keys():
         if request.query_params['country']:
             campaigns = campaigns.filter(countries__contains=request.query_params['country'])
