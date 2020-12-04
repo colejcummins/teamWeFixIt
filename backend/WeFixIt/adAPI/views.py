@@ -57,20 +57,24 @@ def get_ad(request):
     Function that randomly returns a single ad in the database.
     """
     print(request.query_params)
-    campaigns = Campaign.objects.filter(start_date__lte=datetime.date.today()).filter(end_date__gte=datetime.date.today())
+    campaigns = Campaign.objects.filter(start_date__lte=datetime.date.today())\
+        .filter(end_date__gte=datetime.date.today())
 
     if 'country' in request.query_params.keys():
         if request.query_params['country']:
-            campaigns = campaigns.filter(countries__contains=request.query_params['country'])
+            campaigns = campaigns.filter(countries__contains=request.
+                                         query_params['country'])
 
     ad_ids = set()
     for campaign in campaigns:
-        ad_query = Campaign.objects.filter(id=campaign.id).values_list('advertisements', flat=True)
+        ad_query = Campaign.objects.filter(id=campaign.id) \
+            .values_list('advertisements', flat=True)
         ad_query_set = set(ad_query)
         ad_query_set.discard(None)
         ad_ids.update(set(ad_query_set))
 
-    advertisement = select_ad_by_click_rate(Advertisement.objects.filter(pk__in=ad_ids))
+    advertisement = select_ad_by_click_rate(Advertisement.
+                                            objects.filter(pk__in=ad_ids))
     if advertisement is None:
         return JsonResponse({"detail": "not found"})
     serializer = AdvertisementSerializer(advertisement)
@@ -154,12 +158,13 @@ def get_performance(request):
 @api_view(['GET'])
 def get_csv(request):
     """
-    Generates a CSV of analytics data containing the header text, number of clicks,
-    and number of views.
+    Generates a CSV of analytics data containing the header text,
+    number of clicks, and number of views.
 
     Uses the CSV writer because the HTTPResponse is a file-like object.
     """
-    all_records = Advertisement.objects.all().values_list('header_text', 'clicks', 'views')
+    all_records = Advertisement.objects.all()\
+        .values_list('header_text', 'clicks', 'views')
     response = HttpResponse(content_type='text/csv')
 
     csv_writer = csv.writer(response)
