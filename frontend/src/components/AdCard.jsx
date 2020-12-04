@@ -7,7 +7,7 @@ import defaultImage from '../images/testAdImage.png';
 let img = require('../images/7c2gaheiowu31.png');
 
 const AdCardContainer = styled.div`
-  background-color: #daefff;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,14 +25,14 @@ const AdContainer = styled.div`
 `;
 
 const AdImg = styled.img`
-  margin: 0px 50px;
-  width: 200px;
+  margin: 0px 70px;
+  width: 160px;
 `;
 
 const AdTitle = styled.div`
   font-weight: 600;
   font-size: 20px;
-  padding-top: 10px;
+  padding: 5px 10px;
 `;
 
 const AdText = styled.div`
@@ -40,13 +40,18 @@ const AdText = styled.div`
   font-size: 14px;
   font-family: Roboto, Ubuntu, Oxygen, sans-serif;
 
+  padding: 0px 10px;
   color: #000000;
   background-color: inherit;
   text-overflow: ellipsis;
 `;
 
-const AdButton = styled.a`
-  background-color: '#2176FF';
+const AdButton = styled.div`
+  background: '#2176FF';
+`;
+
+const AdLink = styled.a`
+
   font-weight: 200;
   font-size: 14px;
   font-family: Roboto, Ubuntu, Oxygen, sans-serif;
@@ -57,8 +62,6 @@ const AdButton = styled.a`
 `;
 
 export default function AdCard({ title, description }) {
-  let mediaRoot = '../images';
-
   let [ad, setAd] = useState(null)
 
   // Server has to be running for the endpoint to work
@@ -78,18 +81,19 @@ export default function AdCard({ title, description }) {
           <AdTitle>{title}</AdTitle>
           <AdImg src={defaultImage} />
           <AdText>{description}</AdText>
-          <AdButton href={"google.com"}>Go to site</AdButton>
+          <AdLink href={"google.com"}>Go to site</AdLink>
 
         </AdContainer>
       );
     } else {
-      // let other = require(`${mediaRoot}/${ad.image}`);
       return (
         <AdContainer>
           <AdTitle>{ad.header_text}</AdTitle>
-          <AdImg src={defaultImage}/>
+          <AdImg src={`${ad.image}`}/>
           <AdText>{ad.second_text}</AdText>
-          <AdButton href={ad.button_rendered_link}>Go to site</AdButton>
+          <AdButton>
+            <AdLink href={ad.button_rendered_link}>Go to site</AdLink>
+          </AdButton>
         </AdContainer>
       );
     }
