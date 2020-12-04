@@ -42,7 +42,7 @@ class Campaign(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     countries = CountryField(multiple=True)
-    advertisements = models.ManyToManyField(Advertisement)
+    advertisements = models.ManyToManyField(Advertisement, blank=True)
 
     def __str__(self):
         return self.name

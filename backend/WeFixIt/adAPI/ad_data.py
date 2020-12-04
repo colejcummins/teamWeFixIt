@@ -46,4 +46,6 @@ def select_ad_by_click_rate(ads):
     Return:
         A randomly selected ad, weighted by the ad's click through rate
     """
-    return choices(ads, [(ad.clicks + 1) // (ad.views + 1) for ad in ads])[0]
+    if len(ads) == 0:
+        return ads
+    return choices(ads, [(ad.clicks + 1) / (ad.views + 1) for ad in ads])[0]
