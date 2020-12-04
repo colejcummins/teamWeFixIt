@@ -77,7 +77,7 @@ export default function AdCard({ title, description }) {
         <AdContainer>
           <AdTitle>{title}</AdTitle>
           <AdImg src={defaultImage} />
-          <AdText>{desciption}</AdText>
+          <AdText>{description}</AdText>
           <AdButton href={"google.com"}>Go to site</AdButton>
 
         </AdContainer>
@@ -87,7 +87,7 @@ export default function AdCard({ title, description }) {
       return (
         <AdContainer>
           <AdTitle>{ad.header_text}</AdTitle>
-          <AdImg src={img}/>
+          <AdImg src={defaultImage}/>
           <AdText>{ad.second_text}</AdText>
           <AdButton href={ad.button_rendered_link}>Go to site</AdButton>
         </AdContainer>
