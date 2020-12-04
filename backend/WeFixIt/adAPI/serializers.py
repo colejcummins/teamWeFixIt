@@ -38,10 +38,7 @@ class CampaignSerializer(CountryFieldMixin, serializers.ModelSerializer):
         Return:
             data if properly entered
         """
-        try:
-            if data['start_date'] > data['end_date']:
-                raise serializers.ValidationError("End date comes before start"
-                                                  " date in campaign.")
-        except serializers.ValidationError:
-            print("ERROR: End date comes before start date in campaign")
+        if data['start_date'] > data['end_date']:
+            raise serializers.ValidationError("End date comes before start"
+                                              " date in campaign.")
         return data
