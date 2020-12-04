@@ -12,7 +12,13 @@ export const colors = {
 };
 
 export const fetchData = async (url, func) => {
-  await fetch(url)
+  await fetch(url,
+  {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors',
+  })
   .then(res => res.json())
   .then(data => {
     try {

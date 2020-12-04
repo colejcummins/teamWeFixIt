@@ -4,8 +4,13 @@ import styled from 'styled-components';
 import {fetchData} from './Window';
 import AdCard from './AdCard';
 
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
-const PageContainer = styled.span`
+const ItemContainer = styled.div`
   display: block;
   align-items: center;
 
@@ -55,13 +60,13 @@ export default function ItemPage({ title }) {
   useEffect(() => fetchItemPage(), []);
 
   return (
-    <div>
-      <PageContainer>
+    <PageContainer>
+      <ItemContainer>
         <ItemTitle>{title}</ItemTitle>
         <CardText> {itemDescription} </CardText>
         <ItemImage src={itemImage}></ItemImage>
-      </PageContainer>
+      </ItemContainer>
       <AdCard title="Here lies an ad." description="This is an ad description."/>
-    </div>
+    </PageContainer>
   )
 }

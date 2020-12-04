@@ -26,7 +26,7 @@ SECRET_KEY = '%^@pmx(qu6aecdooebqxys9)v=kj5#7f9%er2wi^fvsf4uj%cf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Where images are stored on the server
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
