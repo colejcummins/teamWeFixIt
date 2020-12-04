@@ -1,5 +1,6 @@
 # serializers.py
 
+import mimetypes
 from rest_framework import serializers
 from django_countries.serializers import CountryFieldMixin
 from .models import Campaign, Advertisement
@@ -14,6 +15,11 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         model = Advertisement
         fields = '__all__'
 
+    def validate(self, data):
+        mimetype,encoding = mimetypes.guess_type(data['image'].split("?")[0])
+        if (mimetype and mimetype.startswith('image')):
+            return data
+        raise serializers.ValidationError("Please enter a valid image URL")
 
 class CampaignSerializer(CountryFieldMixin, serializers.ModelSerializer):
     class Meta:

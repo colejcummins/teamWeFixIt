@@ -13,7 +13,7 @@ class Advertisement(models.Model):
         clicks                  - 0-9223372036854775807 integer field
     """
     header_text = models.CharField(max_length=400)
-    image = models.ImageField(upload_to='', blank=True)
+    image = models.URLField()
     second_text = models.CharField(max_length=400)
     button_rendered_link = models.URLField()
     clicks = models.PositiveBigIntegerField(default=0)
