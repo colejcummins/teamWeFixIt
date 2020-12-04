@@ -65,18 +65,27 @@ def get_ad(request):
             campaigns = campaigns.filter(countries__contains=request.
                                          query_params['country'])
 
+    print("Campaigns: ", end="")
+    print(campaigns)
     ad_ids = set()
     for campaign in campaigns:
         ad_query = Campaign.objects.filter(id=campaign.id) \
-            .values_list('advertisements', flat=True)
+                           .values_list('advertisements', flat=True)
+        print(ad_query)
         ad_query_set = set(ad_query)
+        print(ad_query_set)
         ad_query_set.discard(None)
+        print(ad_query_set)
         ad_ids.update(set(ad_query_set))
 
+    print("Possible ad ids: " + str(ad_ids))
     advertisement = select_ad_by_click_rate(Advertisement.
                                             objects.filter(pk__in=ad_ids))
-    if advertisement is None:
+
+    if not advertisement:
         return JsonResponse({"detail": "not found"})
+    print("Printing advertisement")
+    print(advertisement)
     serializer = AdvertisementSerializer(advertisement)
     return Response(serializer.data)
 
