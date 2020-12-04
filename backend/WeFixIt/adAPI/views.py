@@ -1,19 +1,17 @@
 import datetime
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
 from django.template import loader
-from rest_framework import viewsets, status, generics
+from rest_framework import generics
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated, SAFE_METHODS
+from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
-from .ad_data import create_and_save_data
+from .ad_data import create_and_save_data, select_ad_by_click_rate
 from .models import Campaign, Advertisement
 from .serializers import CampaignSerializer, AdvertisementSerializer
-from rest_framework.renderers import JSONRenderer
+from django.http import JsonResponse
+import csv
 
 
-
-# Create your views here.
 
 class AdvertisementList(generics.ListCreateAPIView):
     permission_classes = (IsAdminUser,)
@@ -53,22 +51,27 @@ class CampaignDetail(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def getad(request):
+def get_ad(request):
     """
     Function that randomly returns a single ad in the database.
     """
-    # how to get params for query:
-    # print(request.query_params)
+    print(request.query_params)
     campaigns = Campaign.objects.filter(start_date__lte=datetime.date.today()).filter(end_date__gte=datetime.date.today())
+
+    if 'country' in request.query_params.keys():
+        if request.query_params['country']:
+            campaigns = campaigns.filter(countries__contains=request.query_params['country'])
 
     ad_ids = set()
     for campaign in campaigns:
-        ad_query = Campaign.objects.filter(id=campaign.id).values_list('advertisements',flat=True)
+        ad_query = Campaign.objects.filter(id=campaign.id).values_list('advertisements', flat=True)
         ad_query_set = set(ad_query)
         ad_query_set.discard(None)
         ad_ids.update(set(ad_query_set))
 
-    advertisement = Advertisement.objects.filter(pk__in=ad_ids).order_by('?').first()
+    advertisement = select_ad_by_click_rate(Advertisement.objects.filter(pk__in=ad_ids))
+    if advertisement == None:
+        return JsonResponse({"detail" : "not found"})
     serializer = AdvertisementSerializer(advertisement)
     return Response(serializer.data)
 
@@ -127,6 +130,28 @@ def get_performance(request):
     create_and_save_data()
     template = loader.get_template('adAPI/performance.html')
     return HttpResponse(template.render())
+
+
+@api_view(['GET'])
+def get_csv(request):
+    """
+    Generates a CSV of analytics data containing the header text, number of clicks,
+    and number of views.
+
+    Uses the CSV writer because the HTTPResponse is a file-like object.
+    """
+    all_records = Advertisement.objects.all().values_list('header_text', 'clicks', 'views')
+    response = HttpResponse(content_type='text/csv')
+
+    csv_writer = csv.writer(response)
+    csv_writer.writerow(['Header Text', 'Clicks', 'Views'])
+
+    for record in all_records:
+        csv_writer.writerow(record)
+
+    response['Content-Disposition'] = 'attachment; filename="analytics.csv"'
+
+    return response
 
 
 @api_view(['Delete'])

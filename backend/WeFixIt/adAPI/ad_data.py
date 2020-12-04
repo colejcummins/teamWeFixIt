@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from .models import Advertisement
 import numpy as np
+from random import choices
 
 
 def create_and_save_data():
@@ -9,6 +10,9 @@ def create_and_save_data():
     displays each by name and click-through-rate. The generated image is then saved to
     adAPI/static/adAPI/performance.png
     """
+    # needed to avoid mpl multithreading error 
+    plt.switch_backend('Agg')
+
     advertisements = Advertisement.objects.all()
     click_rates = []
     headers = []
@@ -24,3 +28,18 @@ def create_and_save_data():
     plt.ylabel('Click Through Rate')
     plt.title('Ad Headers and Click Through Rate')
     plt.savefig('adAPI/static/adAPI/performance.png')
+
+
+def select_ad_by_click_rate(ads):
+    """
+    Given a queryset of ads, returns an ad based on a random selection, weighted by the click-through rate of the ad.
+
+    Each ad is initially given a weight of 1 click and 1 view so it has a chance to be shown.
+
+    Args:
+        ads: A queryset of ads
+
+    Return:
+        A randomly selected ad, weighted by the ad's click through rate
+    """
+    return choices(ads, [(ad.clicks + 1) // (ad.views + 1) for ad in ads])[0]

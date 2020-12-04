@@ -1,24 +1,30 @@
 # serializers.py
 
+import mimetypes
 from rest_framework import serializers
+from django_countries.serializers import CountryFieldMixin
 from .models import Campaign, Advertisement
 
 
-class AdvertisementSerializer(serializers.HyperlinkedModelSerializer):
+class AdvertisementSerializer(serializers.ModelSerializer):
     """
     Handles the API requests to create/delete/update Advertisements automatically
     using the fields of the Advertisement.
     """
     class Meta:
         model = Advertisement
-        fields = ('id', 'header_text', 'image', 'second_text',
-                  'button_rendered_link', 'clicks', 'views')
+        fields = '__all__'
 
+    def validate(self, data):
+        mimetype,encoding = mimetypes.guess_type(data['image'].split("?")[0])
+        if (mimetype and mimetype.startswith('image')):
+            return data
+        raise serializers.ValidationError("Please enter a valid image URL")
 
-class CampaignSerializer(serializers.ModelSerializer):
+class CampaignSerializer(CountryFieldMixin, serializers.ModelSerializer):
     class Meta:
         model = Campaign
-        fields = ('id', 'name', 'start_date', 'end_date', 'advertisements')
+        fields = '__all__'
 
 
     def validate(self, data):
