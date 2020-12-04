@@ -51,6 +51,21 @@ class CampaignDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['GET'])
+@permission_classes([IsAdminUser])
+def get_home_view(request):
+    """
+    Returns an HTML response containing the HTML for the home page.
+
+    Args:
+        request: a GET request. User must be Admin to access.
+    Return:
+        HTML response of the home page data.
+    """
+    template = loader.get_template('adAPI/home.html')
+    return HttpResponse(template.render())
+
+
+@api_view(['GET'])
 @permission_classes([AllowAny])
 def get_ad(request):
     """
@@ -151,7 +166,6 @@ def get_performance(request):
     """
     create_and_save_data()
     template = loader.get_template('adAPI/performance.html')
-    print("got here!!")
     return HttpResponse(template.render())
 
 

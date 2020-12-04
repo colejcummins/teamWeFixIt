@@ -1,5 +1,6 @@
 # adAPI/urls.py
 from django.urls import include, path
+from rest_framework import routers
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -10,6 +11,8 @@ from django.conf.urls.static import static
 # STATIC FILES ARE VERY INEFFICIENT AND OFTEN INSECURE.
 
 urlpatterns = [
+    path('', views.get_home_view),
+
     path('campaigns/', views.CampaignList.as_view()),
     path('campaigns/<int:pk>', views.CampaignDetail.as_view()),
 
