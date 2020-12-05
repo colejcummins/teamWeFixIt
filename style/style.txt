@@ -2,7 +2,9 @@ Note: This was mostly adapted from PEP8 the standard style for Python
     https://www.python.org/dev/peps/pep-0008/?#introduction
 
 
-Indentation: 4 spaces 
+Indentation: 
+4 spaces for backend
+2 spaces for frontend
 
 Line Length: 79 characters
 
