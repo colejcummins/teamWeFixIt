@@ -9,6 +9,7 @@ import ItemPage from './ItemPage';
 const TopContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 
 const GridContainer = styled.div`
@@ -21,7 +22,7 @@ const GridContainer = styled.div`
 
   display: grid;
 
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   column-gap: 30px;
   grid-template-rows: auto;
   row-gap: 40px;

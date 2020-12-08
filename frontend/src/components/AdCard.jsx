@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactSimpleSpinner } from 'reactjs-simple-spinner';
 
-import { fetchData } from './Window';
+import { fetchData } from './DemoWindow';
 import defaultImage from '../images/testAdImage.png';
 let img = require('../images/7c2gaheiowu31.png');
 
@@ -74,36 +74,20 @@ export default function AdCard({ title, description }) {
     );
   }
 
-  let renderAd = () => {
-    if (ad == null) {
-      return (
-        <AdContainer>
-          <AdTitle>{title}</AdTitle>
-          <AdImg src={defaultImage} />
-          <AdText>{description}</AdText>
-          <AdLink href={"google.com"}>Go to site</AdLink>
-
-        </AdContainer>
-      );
-    } else {
-      return (
-        <AdContainer>
-          <AdTitle>{ad.header_text}</AdTitle>
-          <AdImg src={`${ad.image}`}/>
-          <AdText>{ad.second_text}</AdText>
-          <AdButton>
-            <AdLink href={ad.button_rendered_link}>Go to site</AdLink>
-          </AdButton>
-        </AdContainer>
-      );
-    }
-  }
-
   useEffect(() => fetchAd(), []);
+
+  let defaults = ad == null ?
+    { title: title, image: defaultImage, description: description, link: "google.com" } :
+    { title: ad.header_text, image: `${ad.image}`, description: ad.second_text, link: ad.button_rendered_link };
 
   return (
     <AdCardContainer>
-      {renderAd()}
+      <AdTitle>{defaults.title}</AdTitle>
+      <AdImg src={defaults.image}/>
+      <AdText>{defaults.description}</AdText>
+      <AdButton>
+        <AdLink href={defaults.link}>Go to site</AdLink>
+      </AdButton>
     </AdCardContainer>
   )
 }

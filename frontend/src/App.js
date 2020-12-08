@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 
-import Window from './components/Window'
+import ParentWindow from './components/ParentWindow'
 
 function App() {
   return (
     <div className="App">
-      <Window />
+      <ParentWindow />
     </div>
   );
 }
