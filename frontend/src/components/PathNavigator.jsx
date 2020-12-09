@@ -28,7 +28,7 @@ const PathSpan = styled.span`
 
 const PathText = styled.div`
   font-weight: 400;
-  font-size: 16px;
+  font-size: 18px;
   font-family: Roboto, Ubuntu, Oxygen, sans-serif;
 
   align-content: center;
