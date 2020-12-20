@@ -5,11 +5,12 @@ import styled from 'styled-components';
 import DemoWindow from './DemoWindow';
 import AdminWindow from './AdminWindow';
 
-export const fetchData = async (url, func, fields={}, onFinally=() => null) => {
+export const fetchData = async (url, func, fields={}, headers={}, onFinally=() => null) => {
   await fetch(url,
   {
     headers: {
       'Content-Type': 'application/json',
+      ...headers,
     },
     ...fields,
   })

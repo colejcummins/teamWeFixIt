@@ -15,7 +15,7 @@ export default function AdminWindow() {
   return (
     <AdminContainer>
       <AdminBar selectedModel={model} setModel={setModel} />
-      <AdminTable model={model} />
+      <AdminTable selectedModel={model} />
     </AdminContainer>
   );
 }
