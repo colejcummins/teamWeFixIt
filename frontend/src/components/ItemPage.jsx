@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ReactSimpleSpinner } from 'reactjs-simple-spinner';
 import styled from 'styled-components';
 
-import {fetchData} from './DemoWindow';
+import { fetchData } from './ParentWindow';
 import AdCard from './AdCard';
 
 const PageContainer = styled.div`

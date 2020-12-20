@@ -3,7 +3,7 @@ import { ReactSimpleSpinner } from 'reactjs-simple-spinner';
 import styled from 'styled-components';
 import _ from 'lodash';
 
-import {fetchData} from './DemoWindow';
+import { fetchData } from './ParentWindow';
 
 const CardContainer = styled.span`
   display: flex;

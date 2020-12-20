@@ -35,7 +35,7 @@ export default function CardGrid({ categories, titles }) {
 
   return (
     <TopContainer>
-      <PathNavigator navPath={path} setPath={setPath}/>
+      <PathNavigator navPath={path} setPath={setPath} />
       {(_.get(categories, path) == null && path.length > 0) ?
         (
           <ItemPage title={path[path.length - 1]} />

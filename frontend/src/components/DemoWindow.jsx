@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ReactSimpleSpinner } from 'reactjs-simple-spinner';
 import styled from 'styled-components';
 
+import { fetchData } from './ParentWindow';
 import CardGrid from './CardGrid'
 
 // Global colors for styling
@@ -10,26 +11,6 @@ export const colors = {
   dark_grey: '#2B3032',
   blue: '#2176FF',
 };
-
-export const fetchData = async (url, func, fields={}, onFinally=() => {}) => {
-  await fetch(url,
-  {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    ...fields,
-  })
-  .then(res => res.json())
-  .then(data => {
-    try {
-      func(data)
-    } catch (e) {
-      throw new Error(`Data failure: ${data}`);
-    }
-  })
-  .catch(e => console.error('Fetching error in Window: ', e));
-  onFinally();
-}
 
 const SpinnerContainer = styled.div`
   align-items: center;

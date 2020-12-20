@@ -3,6 +3,27 @@ import _ from 'lodash';
 import styled from 'styled-components';
 
 import DemoWindow from './DemoWindow';
+import AdminWindow from './AdminWindow';
+
+export const fetchData = async (url, func, fields={}, onFinally=() => null) => {
+  await fetch(url,
+  {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    ...fields,
+  })
+  .then(res => res.json())
+  .then(data => {
+    try {
+      func(data)
+    } catch (e) {
+      throw new Error(`Data failure: ${data}`);
+    }
+  })
+  .catch(e => console.error('Fetching error in Window: ', e))
+  .finally(() => onFinally());
+}
 
 const ParentContainer = styled.span`
   min-width: 100vw;
@@ -46,17 +67,24 @@ export default function ParentWindow() {
   let renderSideBar = () => (
     <Sidebar>
       {_.map(keys, (key, ind) => (
-        <SelectionBox key={key} selected={key == selection ? '#2176FF' : '#2B3032'} top={ind == 0 ? '0px' : '4px'} onClick={() => setSelection(key)}>
+        <SelectionBox
+          key={key}
+          selected={key == selection ? '#2176FF' : '#2B3032'}
+          top={ind == 0 ? '0px' : '4px'}
+          onClick={() => setSelection(key)}
+        >
           <SelectionText>{key}</SelectionText>
         </SelectionBox>
       ))}
     </Sidebar>
   );
 
+  let renderWindow = {'Demo': <DemoWindow/>, 'Admin': <AdminWindow/>};
+
   return (
     <ParentContainer>
       {renderSideBar()}
-      <DemoWindow />
+      {renderWindow[selection]}
     </ParentContainer>
   );
 }

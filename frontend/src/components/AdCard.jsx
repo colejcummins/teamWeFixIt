@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactSimpleSpinner } from 'reactjs-simple-spinner';
 
-import { fetchData } from './DemoWindow';
+import { fetchData } from './ParentWindow';
 import defaultImage from '../images/testAdImage.png';
 let img = require('../images/7c2gaheiowu31.png');
 
