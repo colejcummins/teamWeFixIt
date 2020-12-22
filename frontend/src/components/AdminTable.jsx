@@ -5,15 +5,68 @@ import _ from 'lodash';
 
 import { fetchData } from './ParentWindow';
 
-const TableContainer = styled.div`
+const ComponentContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const TableContainer = styled.div`
+
 `;
 
 const SpinnerContainer = styled.div`
   align-items: center;
   padding: 100px 0px;
 `;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  padding: 10px 20px;
+`;
+
+const RowContainer = styled.div`
+  background-color: #363D40;
+  display: flex;
+  flex-direction: row;
+
+  cursor: pointer;
+
+  padding: 20px;
+  border-radius: 4px;
+
+  margin-bottom: 20px;
+
+  &:hover {
+    background-color: #2B3032;
+  }
+`;
+
+const RowText = styled.div`
+  text-align: left;
+
+  width: ${props => props.width}%;
+
+  font-weight: 500;
+  font-size: ${props => props.fontSize}px;
+  font-family: Roboto, Ubuntu, Oxygen, sans-serif;
+
+  color: #ffffff;
+  text-overflow: ellipsis;
+`;
+
+// Literal width Values for styling
+const modelColumns = {
+  Advertisements: {
+    widths: ['10', '20', '15', '15', '40'],
+    columns: ['id', 'header_text', 'views', 'clicks', 'second_text'],
+  },
+  Campaigns: {
+    widths: ['10', '40', '15', '15'],
+    columns: ['id', 'name', 'start_date', 'end_date'],
+  },
+}
 
 export default function AdminTable({ selectedModel }) {
 
@@ -41,8 +94,34 @@ export default function AdminTable({ selectedModel }) {
 
   useEffect(() => fetchModels(), [selectedModel]);
 
+  let renderHeader = () => (
+    <HeaderContainer>
+      {
+        _.map(modelColumns[selectedModel].columns, (columnName, ind) => (
+          <RowText fontSize={'14'} width={modelColumns[selectedModel].widths[ind]}>
+            {columnName}
+          </RowText>
+        ))
+      }
+    </HeaderContainer>
+  )
+
+  let renderTable = () => {
+    return _.map(modelRows, (model, ind) => (
+      <RowContainer>
+        {
+          _.map(modelColumns[selectedModel].columns, (columnName, ind) => (
+            <RowText fontSize={'16'} width={modelColumns[selectedModel].widths[ind]}>
+              {model[columnName]}
+            </RowText>
+          ))
+        }
+      </RowContainer>
+    ))
+  }
+
   return (
-    <TableContainer>
+    <ComponentContainer>
       {loading ?
         (
           <SpinnerContainer>
@@ -50,9 +129,12 @@ export default function AdminTable({ selectedModel }) {
           </SpinnerContainer>
         ) :
         (
-          <div/>
+          <TableContainer>
+            {renderHeader()}
+            {renderTable()}
+          </TableContainer>
         )
       }
-    </TableContainer>
+    </ComponentContainer>
   );
 }

@@ -19,8 +19,10 @@ const SpinnerContainer = styled.div`
 
 const ContentContainer = styled.div`
   display: flex;
+
   width: calc(100% - 180px);
   justify-content: center;
+  align-items: flex-start;
 `;
 
 export default function DemoWindow() {

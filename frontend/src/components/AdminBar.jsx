@@ -7,6 +7,7 @@ const BarContainer = styled.div`
   flex-direction: row;
 
   padding: 10px 15px;
+  margin-bottom: 5px;
 `;
 
 const ModelsContainer = styled.div`
