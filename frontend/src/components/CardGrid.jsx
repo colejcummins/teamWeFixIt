@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import _ from 'lodash';
+import { keys, get, map } from 'lodash';
 
 import Card from './Card';
 import PathNavigator from './PathNavigator';
@@ -31,19 +31,19 @@ const GridContainer = styled.div`
 export default function CardGrid({ categories, titles }) {
   let [path, setPath] = useState([]);
 
-  let currentKeys = _.keys(path.length > 0 ? _.get(categories, path) : categories).sort();
+  let currentKeys = keys(path.length > 0 ? get(categories, path) : categories).sort();
 
   return (
     <TopContainer>
       <PathNavigator navPath={path} setPath={setPath} />
-      {(_.get(categories, path) == null && path.length > 0) ?
+      {(get(categories, path) == null && path.length > 0) ?
         (
           <ItemPage title={path[path.length - 1]} />
         ) :
         (
           <GridContainer>
             {
-              _.map(currentKeys, (key) => (
+              map(currentKeys, (key) => (
                 <Card key={key} title={key} path={path} setPath={setPath} />
               ))
             }

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import _ from 'lodash';
+import { map, slice } from 'lodash';
 
 import {ReactComponent as ChevronRight} from '../chevron-right.svg';
 
@@ -45,9 +45,9 @@ export default function PathNavigator({ navPath, setPath }) {
   return (
     <TopContainer>
       <PathContainer>
-        {_.map(path, (val, ind) => (
+        {map(path, (val, ind) => (
           <PathSpan key={ind}>
-            <PathText onClick={() => setPath(_.slice(navPath, 0, ind))}>{val}</PathText>
+            <PathText onClick={() => setPath(slice(navPath, 0, ind))}>{val}</PathText>
             {(ind < (path.length - 1)) ?
               (
                 <ChevronRight style={{color: '#2176FF', padding: '0px 5px'}}/>

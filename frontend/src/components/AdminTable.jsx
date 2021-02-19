@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ReactSimpleSpinner } from 'reactjs-simple-spinner';
 import styled from 'styled-components';
-import _ from 'lodash';
+import { map, lowerFirst } from 'lodash';
 
 import { fetchData } from './ParentWindow';
 
@@ -76,7 +76,7 @@ export default function AdminTable({ selectedModel }) {
   let fetchModels = () => {
     setLoading(true);
 
-    fetchData(`http://127.0.0.1:8000/${_.lowerFirst(selectedModel)}/`,
+    fetchData(`http://127.0.0.1:8000/${lowerFirst(selectedModel)}/`,
       (data) => {
         console.log(data);
         setModelRows(data);
@@ -96,27 +96,23 @@ export default function AdminTable({ selectedModel }) {
 
   let renderHeader = () => (
     <HeaderContainer>
-      {
-        _.map(modelColumns[selectedModel].columns, (columnName, ind) => (
-          <RowText fontSize={'14'} width={modelColumns[selectedModel].widths[ind]}>
-            {columnName}
-          </RowText>
-        ))
-      }
+      {renderRows("14", (name) => name)}
     </HeaderContainer>
   )
 
   let renderTable = () => {
-    return _.map(modelRows, (model, ind) => (
+    return map(modelRows, (model) => (
       <RowContainer>
-        {
-          _.map(modelColumns[selectedModel].columns, (columnName, ind) => (
-            <RowText fontSize={'16'} width={modelColumns[selectedModel].widths[ind]}>
-              {model[columnName]}
-            </RowText>
-          ))
-        }
+        {renderRows("16", (name) => model[name])}
       </RowContainer>
+    ))
+  }
+
+  let renderRows = (fontSize, content) => {
+    return map(modelColumns[selectedModel].columns, (columnName, ind) => (
+      <RowText fontSize={fontSize} width={modelColumns[selectedModel].widths[ind]}>
+        {content(columnName)}
+      </RowText>
     ))
   }
 

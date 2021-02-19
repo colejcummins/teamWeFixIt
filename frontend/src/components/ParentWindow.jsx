@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import _ from 'lodash';
+import { map } from 'lodash';
 import styled from 'styled-components';
 
 import DemoWindow from './DemoWindow';
@@ -67,7 +67,7 @@ export default function ParentWindow() {
 
   let renderSideBar = () => (
     <Sidebar>
-      {_.map(keys, (key, ind) => (
+      {map(keys, (key, ind) => (
         <SelectionBox
           key={key}
           selected={key == selection ? '#2176FF' : '#2B3032'}

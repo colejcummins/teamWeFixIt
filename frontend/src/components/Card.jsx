@@ -1,7 +1,7 @@
 import React, {useRef, useEffect, useState} from 'react';
 import { ReactSimpleSpinner } from 'reactjs-simple-spinner';
 import styled from 'styled-components';
-import _ from 'lodash';
+import { concat } from 'lodash';
 
 import { fetchData } from './ParentWindow';
 
@@ -52,7 +52,7 @@ export default function Card({ title, path, setPath }) {
   useEffect(() => fetchCardImage(), []);
 
   return (
-    <CardContainer ref={visibleRef} onClick={() => setPath(_.concat(path, title))}>
+    <CardContainer ref={visibleRef} onClick={() => setPath(concat(path, title))}>
       {loading ?
         (
           <ReactSimpleSpinner size={48} lineFgColor={'#2176FF'} lineBgColor={'#FFFFFF'} style={{padding: '0px 5px'}}/>

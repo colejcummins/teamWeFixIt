@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import { map } from 'lodash';
 import styled from 'styled-components';
 
 const BarContainer = styled.div`
@@ -39,7 +39,7 @@ export default function AdminBar({ selectedModel, setModel }) {
 
   let renderModels = () => (
     <ModelsContainer>
-      {_.map(models, (model) => (
+      {map(models, (model) => (
         <ModelContainer key={model} onClick={() => setModel(model)}>
           <ModelText>{model}</ModelText>
           <SelectedBar selected={model == selectedModel ? '#2176FF' : '#2B3032'} />
