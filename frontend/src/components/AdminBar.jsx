@@ -6,6 +6,9 @@ const BarContainer = styled.div`
   display: flex;
   flex-direction: row;
 
+  width: calc(100% - 30px);
+  justify-content: space-between;
+
   padding: 10px 15px;
   margin-bottom: 5px;
 `;

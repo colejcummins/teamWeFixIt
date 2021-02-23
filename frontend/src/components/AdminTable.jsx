@@ -7,11 +7,17 @@ import { fetchData } from './ParentWindow';
 
 const ComponentContainer = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
+
+  overflow: auto;
 `;
 
 const TableContainer = styled.div`
+`;
 
+const ScrollContainer = styled.div`
+  overflow: scroll;
 `;
 
 const SpinnerContainer = styled.div`
@@ -98,15 +104,19 @@ export default function AdminTable({ selectedModel }) {
     <HeaderContainer>
       {renderRows("14", (name) => name)}
     </HeaderContainer>
-  )
+  );
 
-  let renderTable = () => {
-    return map(modelRows, (model) => (
-      <RowContainer>
-        {renderRows("16", (name) => model[name])}
-      </RowContainer>
-    ))
-  }
+  let renderTable = () => (
+    <ScrollContainer>
+      {
+        map(modelRows, (model) => (
+          <RowContainer>
+            {renderRows("16", (name) => model[name])}
+          </RowContainer>
+        ))
+      }
+    </ScrollContainer>
+  );
 
   let renderRows = (fontSize, content) => {
     return map(modelColumns[selectedModel].columns, (columnName, ind) => (

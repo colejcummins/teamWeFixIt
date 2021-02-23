@@ -27,8 +27,10 @@ export const fetchData = async (url, func, fields={}, headers={}, onFinally=() =
 }
 
 const ParentContainer = styled.span`
-  min-width: 100vw;
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+
+  min-width: 1000px;
 
   display: flex;
   flex-direction: row;

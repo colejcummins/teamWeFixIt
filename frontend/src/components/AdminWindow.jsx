@@ -8,9 +8,10 @@ const AdminContainer = styled.div`
   display: flex;
   flex-direction: column;
 
+  margin: 0px 80px;
+
   width: calc(100% - 180px);
-  justify-content: center;
-  align-items: flex-start;
+
 `;
 
 export default function AdminWindow() {
